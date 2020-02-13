@@ -1,0 +1,66 @@
+{
+  "rfLanguageServer.includePaths": [
+    "**/*.robot",
+    "**/*.py"
+    ],
+    "rfLanguageServer.libraries": [
+      "BuiltIn-3.0.4",
+      "Collections-3.0.4",
+      "OperatingSystem-3.0.4",
+      "String-3.0.4",
+      "SeleniumLibrary-3.3.1",
+      {
+        "name": "DatabaseLibrary",
+        "version": "1.2.4",
+        "keywords": [
+          { "name": "Check If Exists In Database",  "args": ["selectStatement"],  "doc": "Check if any row would be returned by given the input selectStatement. If there are no results, then this will throw an AssertionError." },
+          { "name": "Check If Not Exists In Database",  "args": ["selectStatement"],  "doc": "Check if no rows would be returned by given the input selectStatement. If there are any results, then this will throw an AssertionError" },
+          { "name": "Connect To Database",  "args": ["dbapiModuleName", "dbName", "dbUsername", "dbPassword", "dbHost", "dbPort", "dbConfigFil"], "doc": "Loads the DB API 2.0 module given dbapiModuleName then uses it to connect to the database using dbName, dbUsername, and dbPassword." },
+          { "name": "Delete All Rows From Table", "args": ["tableName"], "doc": "Delete all the rows within a given table" },
+          { "name": "Description", "args": ["selectStatement"], "doc": "Uses the input selectStatement to query a table in the db which will be used to determine the description" },
+          { "name": "Disconnect From Database", "args": [], "doc": "Disconnects from the database" },
+          { "name": "Execute Sql Script",  "args": ["sqlScriptFileName"],  "doc": "Executes the content of the sqlScriptFileName as SQL commands. Useful for setting the database to a known state before running your tests, or clearing out your test data after running each a test. SQL commands are expected to be delimited by a semi-colon (';')" },
+          { "name": "Query",  "args": ["selectStatement"],  "doc": "Uses the input selectStatement to query for the values that will be returned as a list of tuples" },
+          { "name": "Row Count",  "args": ["selectStatement"],  "doc": "Uses the input selectStatement to query the database and returns the number of rows from the query" },
+          { "name": "Row Count Is 0",  "args": ["selectStatement"],  "doc": "Check if any rows are returned from the submitted selectStatement. If there are, then this will throw an AssertionError" },
+          { "name": "Row Count Is Equal To X",  "args": ["selectStatement","numRows"],  "doc": "Check if the number of rows returned from selectStatement is equal to the value submitted. If not, then this will throw an AssertionError" },
+          { "name": "Row Count Is Greater Than X",  "args": ["selectStatement","numRows"],  "doc": "Check if the number of rows returned from selectStatement is greater than the value submitted. If not, then this will throw an AssertionError" },
+          { "name": "Row Count Is Less Than X",  "args": ["selectStatement","numRows"],  "doc": "Check if the number of rows returned from selectStatement is less than the value submitted. If not, then this will throw an AssertionError" },
+          { "name": "Table Must Exist",  "args": ["tableName"],  "doc": "Check if the table given exists in the database" } 
+        ]
+      },
+      {
+        "name": "RequestsLibrary",
+        "version": "2.22.0",
+        "keywords": [
+          { "name": "Create Session",  "args": ["alias", "url", "headers={}", "cookies={}", "auth=None", "timeout=None", "proxies=None", "verify=False", "debug=0", "max_retries=3", "backoff_factor=0.1", "disable_warnings=0", "retry_status_list=[]", "retry_method_list=['PUT', 'HEAD', 'GET', 'TRACE', 'DELETE', 'OPTIONS'"],  "doc": "Create Session: create a HTTP session to a server." },
+          { "name": "Delete All Sessions",  "args": [],  "doc": "Removes all the session objects" },
+          { "name": "Delete Request",  "args": ["alias", "uri", "data=None", "json=None", "params=None", "headers=None", "allow_redirects=None", "timeout=None"],  "doc": "Send a DELETE request on the session object found using the given alias" },
+          { "name": "Get Request",  "args": ["alias", "uri", "headers=None", "data=None", "json=None", "params=None", "allow_redirects=None", "timeout=None"],  "doc": "Send a GET request on the session object found using the given alias" },
+          { "name": "Head Request",  "args": ["alias", "uri", "headers=None", "allow_redirects=None", "timeout=None"],  "doc": "Send a HEAD request on the session object found using the given alias" },
+          { "name": "Options Request",  "args": ["alias", "uri", "headers=None", "allow_redirects=None", "timeout=None"],  "doc": "Send an OPTIONS request on the session object found using the given alias" },
+          { "name": "Patch Request",  "args": ["alias", "uri", "data=None", "json=None", "params=None", "headers=None", "files=None", "allow_redirects=None", "timeout=None"],  "doc": "Send a PATCH request on the session object found using the given alias" },
+          { "name": "Post Request",  "args": ["alias", "uri", "data=None", "json=None", "params=None", "headers=None", "files=None", "allow_redirects=None", "timeout=None"],  "doc": "Send a POST request on the session object found using the given alias" },
+          { "name": "Put Request",  "args": ["alias", "uri", "data=None", "json=None", "params=None", "files=None", "headers=None", "allow_redirects=None", "timeout=None"],  "doc": "Send a PUT request on the session object found using the given alias" },
+          { "name": "Request Should Be Successful",  "args": ["response", "msg=None"],  "doc": "Fails if response status code is a client or server error (4xx, 5xx)" },
+          { "name": "Session Exists",  "args": ["alias"],  "doc": "Return True if the session has been already created" },
+          { "name": "Status Should Be",  "args": ["expected_status", "response", "msg=None"],  "doc": "Fails if response status code is different than the expected." },
+          { "name": "To Json",  "args": ["content", "pretty_print=False"],  "doc": "Convert a string to a JSON object" },
+          { "name": "Update Session",  "args": ["alias", "headers=None", "cookies=None"],  "doc": "Update Session Headers: update a HTTP Session Headers" }
+        ]
+      },
+      {
+        "name": "JSONLibrary",
+        "version": "0.3.1",
+        "keywords": [
+          { "name": "Load JSON From File",  "args": ["file_name"],  "doc": "Load JSON from file" },
+          { "name": "Add Object To Json",  "args": ["json_object","json_path","object_to_add"],  "doc": "Add an dictionary or list object to json object using json_path" },
+          { "name": "Get Value From Json",  "args": ["json_object","json_path"],  "doc": "Get Value From JSON using JSONPath" },
+          { "name": "Update Value To Json",  "args": ["json_object","json_path","new_value"],  "doc": "Update value to JSON using JSONPath" },
+          { "name": "Delete Object From Json",  "args": ["json_object","json_path"],  "doc": "Delete Object From JSON using json_path" },
+          { "name": "Convert JSON To String",  "args": ["json_object"],  "doc": "Convert JSON object to string" },
+          { "name": "Convert String to JSON",  "args": ["json_string"],  "doc": "Convert String to JSON object" }
+        ] 
+      }
+      ]
+}
