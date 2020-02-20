@@ -2,8 +2,8 @@
 # web
 ${gWebUrlUat}     http://arrosvmapp313/ldc-yard/login
 ${gBrowserChrome}    chrome
-${gUser}          ldc_yard_app_pool_id
-${gContrasenia}    +qHIe`=R1KkwaT|V0"y,
+${gUser}          fabio.olivieri
+${gContrasenia}    Colorado8888
 ${gIDTerminalTimbues}    137
 # APIs
 ${gAppUrlUat}    http://arrosvmapp313/Ldc.Yard.Web.Api/api

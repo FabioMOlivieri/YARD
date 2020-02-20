@@ -1,6 +1,6 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Cupo/Validar Cupo.robot
+Resource        ../../User Interface/Cupo/Controles Validar Cupo.robot
 
 *** Keywords ***
 #CIRCUITO
@@ -15,7 +15,7 @@ Seleccionar Tipo Documento Porte
     Elegir Opcion Lista Por Valor  ${ddlTipoDocumentoPorte}  ${IdTipoDocumentoPorte} 
 Ingresar Numero Documento Porte
     [Arguments]    ${NumeroDocumentoPorte}
-    ${txtNumeroDocumentoPorte}    Capturar Elemento    ${locTxtNumeroDocumentoPorte}
+    ${txtNumeroDocumentoPorte}    Capturar Elemento   ${locTxtNumeroDocumentoPorte}
     Ingresar Texto    ${txtNumeroDocumentoPorte}    ${NumeroDocumentoPorte}
 #DATOS CUPO
 Seleccionar Opcion Con Cupo

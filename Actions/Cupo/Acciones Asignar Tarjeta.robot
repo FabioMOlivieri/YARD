@@ -1,6 +1,6 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Cupo/Asignar Tarjeta.robot
+Resource        ../../User Interface/Cupo/Controles Asignar Tarjeta.robot
 
 *** Keywords ***
 Ingresar Numero Tarjeta

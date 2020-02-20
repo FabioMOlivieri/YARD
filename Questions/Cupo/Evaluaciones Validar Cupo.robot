@@ -1,6 +1,6 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Cupo/Validar Cupo.robot
+Resource        ../../User Interface/Cupo/Controles Validar Cupo.robot
 
 **Variables
 ${QueryValidarCupo}     SELECT P.ALIAS, SS.FISCAL_CODE, SB.FISCAL_CODE, SC.FISCAL_CODE, QC.ID_PURPOSE, QC.ID_QUOTA_REASON 
@@ -26,7 +26,7 @@ Tipo documento porte debe ser ${aTipoDocumento} y estar deshabilitado
 Nro documento porte debe tener el foco
     Element Should Be Focused  ${locTxtNumeroDocumentoPorte}
 
-El sistema debe habilitar el ingreso del cupo
+Nro cupo debe estar habilitado para el ingreso y datos documento inhabilitados
     Element Should Be Enabled  ${locTxtCodigoCupo}
     Element Should Be Disabled  ${locTxtProducto}
     Element Should Be Disabled  ${locBtnBuscarProducto}
@@ -41,7 +41,7 @@ El sistema debe habilitar el ingreso del cupo
     Element Should Be Disabled  ${locTxtSedeOrigen}
     Element Should Be Focused  ${locTxtCodigoCupo}
 
-El sistema debe habilitar el ingreso sin cupo
+Datos documento deben estar habilitados para el ingreso y Nro cupo inhabilitado 
     Element Should Be Disabled  ${locTxtCodigoCupo}
     Element Should Be Enabled  ${locTxtProducto}
     Element Should Be Enabled  ${locBtnBuscarProducto}
@@ -55,17 +55,17 @@ El sistema debe habilitar el ingreso sin cupo
     Element Should Be Enabled  ${locDdlMotivoCupo}
     Element Should Be Enabled  ${locTxtSedeOrigen}
 
-El sistema debe habilitar el ingreso de datos EPA
+Datos EPA deben estar habilitados para el ingreso
     Element Should Be Enabled  ${locTxtTitular}
     Element Should Be Enabled  ${locBtnBuscarTitular}
     Element Should Be Enabled  ${locDdlCampoEPA}
 
-El sistema debe deshabilitar el ingreso de datos EPA
+Datos EPA deben estar deshabilitados para el ingreso
     Element Should Be Disabled  ${locTxtTitular}
     Element Should Be Disabled  ${locBtnBuscarTitular}
     Element Should Be Disabled  ${locDdlCampoEPA}
 
-El sistema debe recuperar datos del cupo ingresado
+Sistema debe recuperar datos del cupo ingresado
     [Arguments]     ${aCupo}
     ${Producto}=   Get Value  ${locTxtProducto}
     ${Vendedor}=    Get Value  ${locTxtVendedor}
@@ -82,14 +82,14 @@ El sistema debe recuperar datos del cupo ingresado
     Should Be Equal As Integers  ${Finalidad}   ${ResultadoQuery[0][4]}
     Should Be Equal As Integers  ${MovitoCupo}      ${ResultadoQuery[0][5]}
 
-El sistema debe informar el ingreso exitoso
+Sistema debe informar el ingreso exitoso
     Page Should Contain  Se aceptó el ingreso de la descarga
 
-El sistema debe volver al estado inical
+Sistema debe volver al estado inicial de la pantalla
     Element Text Should Be  ${locTxtNumeroDocumentoPorte}  ${EMPTY}
     Element Should Be Focused  ${locTxtNumeroDocumentoPorte}
 
-El sistema debe guardar el movimiento
+Sistema debe guardar el movimiento
     [Arguments]     ${Tarjeta}
     ${Consulta}     Set Variable  ${QueryValidarMovimientoGuardado} '${Tarjeta}'
     Check If Exists In Database    ${Consulta}

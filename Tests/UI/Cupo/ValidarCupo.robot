@@ -1,10 +1,11 @@
 *** Settings ***
-Resource        ../../../Tasks/Cupo/Validar Cupo.robot
+Resource        ../../../Tasks/Cupo/Tareas Validar Cupo.robot
+Resource        ../../../Tasks/Cupo/Tareas Asignar Tarjeta.robot
 Resource        ../../../Tasks/Login.robot
 Resource        ../../../Tasks/Menu.robot
 Resource        ../../../Global Definitions/Variables.robot
 Resource        ../../../Global Definitions/Constantes.robot
-Resource        ../../../Questions/Cupo/Validar Cupo.robot
+Resource        ../../../Questions/Cupo/Evaluaciones Validar Cupo.robot
 Suite Setup     Run Keywords  Iniciar Aplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}     AND     Ir a Validar Cupo
 Suite Teardown  Cerrar Pantalla
 Library         DatabaseLibrary
@@ -12,64 +13,64 @@ Library         DatabaseLibrary
 **Test Cases
 #### USABILIDADES PARTICULARES####
 UsabilidadEstadoInicial
-    #GIVEN El usuario ingresa a validar camion
-    THEN Tipo de producto debe ser Cereal
-        AND Tipo documento porte debe ser Carta de Porte y estar deshabilitado
-        AND Nro documento porte debe tener el foco
+    #GIVEN estado inicial de la pantalla
+    THEN Evaluaciones Validar Cupo.Tipo de producto debe ser Cereal
+        AND Evaluaciones Validar Cupo.Tipo documento porte debe ser Carta de Porte y estar deshabilitado
+        AND Evaluaciones Validar Cupo.Nro documento porte debe tener el foco
 
 UsabilidadSeleccionOpcionConCupo
-    GIVEN El usuario ingresa una carta de porte     123412345678
-    WHEN El usuario selecciona el ingreso con Cupo
-    THEN El sistema debe habilitar el ingreso del cupo
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte     123412345678
+    WHEN Tareas Validar Cupo.Selecciona Ingreso con Cupo
+    THEN Evaluaciones Validar Cupo.Nro cupo debe estar habilitado para el ingreso y datos documento inhabilitados
 
 UsabilidadSeleccionOpcionSinCupo
-    GIVEN El usuario ingresa una carta de porte     123412345678
-    WHEN El usuario selecciona el ingreso sin Cupo
-    THEN El sistema debe habilitar el ingreso sin cupo
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte     123412345678
+    WHEN Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+    THEN Evaluaciones Validar Cupo.Datos documento deben estar habilitados para el ingreso y Nro cupo inhabilitado 
 
 UsabilidaSeleccionProductoEPA
-    GIVEN El usuario ingresa una carta de porte     123412345678
-        AND El usuario selecciona el ingreso sin Cupo
-    WHEN El usuario ingresa producto    ${gIdSojaEpa}
-    THEN El sistema debe habilitar el ingreso de datos EPA
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte     123412345678
+        AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+    WHEN Tareas Validar Cupo.Ingresa Producto    ${gIdSojaEpa}
+    THEN Evaluaciones Validar Cupo.Datos EPA deben estar habilitados para el ingreso
 
 UsabilidadSeleccionProductoNoEPA  
-    GIVEN El usuario ingresa una carta de porte     123412345678
-        AND El usuario selecciona el ingreso sin Cupo
-    WHEN El usuario ingresa producto    ${gIdSoja}
-    THEN El sistema debe deshabilitar el ingreso de datos EPA
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte     123412345678
+        AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+    WHEN Tareas Validar Cupo.Ingresa Producto    ${gIdSoja}
+    THEN Evaluaciones Validar Cupo.Datos EPA deben estar deshabilitados para el ingreso
 
 UsabilidadRecuperarDatoDocumentoDeCupo
     [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
     [Teardown]  Disconnect From Database
-    GIVEN El usuario ingresa una carta de porte     123412345678
-        AND El usuario selecciona el ingreso con Cupo
-    WHEN El usuario ingresa el cupo  TMB-SOJ-20191016-4514
-    THEN El sistema debe recuperar datos del cupo ingresado     TMB-SOJ-20191016-4514
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte     123412345678
+        AND Tareas Validar Cupo.Selecciona Ingreso con Cupo
+    WHEN Tareas Validar Cupo.Ingresa Cupo  TMB-SOJ-20191016-4514
+    THEN Evaluaciones Validar Cupo.Sistema debe recuperar datos del cupo ingresado     TMB-SOJ-20191016-4514
 
 ### CIRCUITOS ####
 FlujoOkCerealSinCupoSinWsAfip 
     [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
     [Teardown]  Disconnect From Database
-    GIVEN El usuario ingresa una carta de porte      888811111113
-    WHEN El usuario selecciona el ingreso sin Cupo
-        AND El usuario ingresa datos documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
-        AND El usuario ingresa datos CTG    1   1   ${gCuilTransportista}   ${gCuilChofer}  1
-        AND El usuario decide aceptar
-        AND El usuario asigna Tarjeta   98
-    THEN El sistema debe informar el ingreso exitoso
-        AND El sistema debe guardar el movimiento   98
-        AND El sistema debe volver al estado inical
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte      888811111117
+    WHEN Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
+        AND Tareas Validar Cupo.Ingresa Datos CTG    1   1   ${gCuilTransportista}   ${gCuilChofer}  1
+        AND Tareas Validar Cupo.Decide aceptar
+        AND Tareas Asignar Tarjeta.Asigna Tarjeta  83
+    THEN Evaluaciones Validar Cupo.Sistema debe informar el ingreso exitoso
+        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento   83
+        AND Evaluaciones Validar Cupo.Sistema debe volver al estado inicial de la pantalla
 
 FlujoOkCerealConCupoSinWsAfip
     [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
     [Teardown]  Disconnect From Database
-    GIVEN El usuario ingresa una carta de porte      888811111113
-    WHEN El usuario selecciona el ingreso con Cupo
-        AND El usuario ingresa el cupo   TMB-SOJ-20191016-4514
-        AND El usuario ingresa datos CTG    1   1   ${gCuilTransportista}   ${gCuilChofer}  1
-        AND El usuario decide aceptar
-        AND El usuario asigna Tarjeta   98
-    THEN El sistema debe informar el ingreso exitoso
-        AND El sistema debe guardar el movimiento   98
-        AND El sistema debe volver al estado inical
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte      888811111116
+    WHEN Tareas Validar Cupo.Selecciona Ingreso con Cupo
+        AND Tareas Validar Cupo.Ingresa Cupo   TMB-SOJ-20191212-5314
+        AND Tareas Validar Cupo.Ingresa Datos CTG    1   1   ${gCuilTransportista}   ${gCuilChofer}  1
+        AND Tareas Validar Cupo.Decide aceptar
+        AND Tareas Asignar Tarjeta.Asigna Tarjeta   82
+    THEN Evaluaciones Validar Cupo.Sistema debe informar el ingreso exitoso
+        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento   82
+        AND Evaluaciones Validar Cupo.Sistema debe volver al estado inicial de la pantalla
