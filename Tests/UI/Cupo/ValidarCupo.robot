@@ -58,6 +58,14 @@ UsabilidadBusquedaAvanzadaProducto
         AND Tareas Busqueda Avanzada Producto.Buscar producto por codigo  ${gIdSoja}
     THEN Evaluaciones Validar Cupo.Sistema debe visualizar descripcion del producto seleccionado  ${gIdSoja}
 
+UsabilidadFinalidadesActivas
+    [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
+    [Teardown]  Disconnect From Database
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte  123412345678
+        AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilLDC}    ${gCuilLDC}   ${gCuilZeni}    ${gIdFinalidadCV}   ${gIdMotivoCV}
+    THEN Evaluaciones Validar Cupo.Sistema debe visualizar todas las finalidades activas
+
 ### CIRCUITOS ####
 FlujoOkCerealSinCupoSinWsAfip 
     [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}

@@ -1,6 +1,7 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
 Resource        ../../User Interface/Cupo/Controles Validar Cupo.robot
+Library         Collections
 
 **Variables
 ${QueryValidarCupo}     SELECT P.ALIAS, SS.FISCAL_CODE, SB.FISCAL_CODE, SC.FISCAL_CODE, QC.ID_PURPOSE, QC.ID_QUOTA_REASON 
@@ -13,7 +14,9 @@ ${QueryValidarMovimientoGuardado}   SELECT M.*
 ...     FROM T_MOVEMENT M
 ...     INNER JOIN T_CARD C ON M.ID_CARD = C.ID_CARD
 ...     WHERE M.ID_MOVEMENT_STATUS = 10 AND C.NUMBER =
-
+${QueryValidarFinalidades}      SELECT NAME_PURPOSE FROM T_PURPOSE P
+...     INNER JOIN T_CIRCUIT_PURPOSE CP ON P.ID_PURPOSE = CP.ID_PURPOSE
+...     WHERE P.ACTIVE = 1 AND CP.ID_CIRCUIT =  
 
 **Keywords
 Tipo de producto debe ser ${aTipoProducto}
@@ -98,3 +101,12 @@ Sistema debe visualizar descripcion del producto seleccionado
     [Arguments]     ${CodigoProducto}
     ${ResultadoQuery}=  Query  SELECT NAME_PRODUCT FROM T_PRODUCT WHERE ID_PRODUCT = ${CodigoProducto} 
     Element Text Should Be  ${loclblDescripcionProducto}  ${ResultadoQuery[0][0]}
+
+Sistema debe visualizar todas las finalidades activas
+    ${lista}     Get List Items  ${locDdlFinalidad}
+    ${Consulta}     Set Variable  ${QueryValidarFinalidades} 51
+    ${ResultadoConsulta}=   Query  ${Consulta}
+    ${cantFilas}=   Get Length  ${ResultadoConsulta}
+    FOR     ${i}    IN RANGE    1   ${cantFilas}
+        Should Be Equal  ${ResultadoConsulta[${i}-1][0]}  ${lista[${i}]}
+    END

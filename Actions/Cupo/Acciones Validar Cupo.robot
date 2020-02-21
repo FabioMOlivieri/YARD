@@ -70,6 +70,11 @@ Seleccionar Motivo Cupo
     [Arguments]     ${IdMotivoCupo}
     ${ddlMotivoCupo}  Capturar Elemento  ${locDdlMotivoCupo}
     Elegir Opcion Lista Por Valor  ${ddlMotivoCupo}  ${IdMotivoCupo} 
+Ingresar Sede
+    [Arguments]     ${valorABuscar}
+    ${txtSedeOrigen}      Capturar Elemento  ${locTxtSedeOrigen}
+    Ingresar Texto  ${txtSedeOrigen}   ${valorABuscar}
+    #Press Keys  ${txtSedeOrigen}  RETURN
 #CAMPO EPA
 Ingresar Titular
     [Arguments]    ${CuitTitular}

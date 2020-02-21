@@ -58,3 +58,5 @@ ${locBtnCancelar}  xpath://*[@id="validarCupoSection"]/div/div[2]/button[2]
 ${locBtnDejarPendiente}    xpath://*[@id="validarCupoSection"]/div/div[1]/button[1]
 ${locBtnConsultarDatosAFIP}    xpath://*[@id="validarCupoSection"]/div/div[1]/button[2]
 
+${locDdlSedeOrigen}     xpath://*[@id="ngb-typeahead-0"]
+
