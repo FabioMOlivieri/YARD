@@ -1,6 +1,6 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Popups generales/Controles Busqueda Avanzada Producto.robot
+Resource        ../../User Interface/Cupo/Controles Busqueda Avanzada Producto.robot
 
 *** Keywords ***
 Ingresar Codigo Producto

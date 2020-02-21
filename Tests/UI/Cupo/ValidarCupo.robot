@@ -1,7 +1,8 @@
 *** Settings ***
 Resource        ../../../Tasks/Cupo/Tareas Validar Cupo.robot
 Resource        ../../../Tasks/Popups generales/Tareas Asignar Tarjeta.robot
-Resource        ../../../Tasks/Popups generales/Tareas Busqueda Avanzada Producto.robot
+Resource        ../../../Tasks/Cupo/Tareas Busqueda Avanzada Producto.robot
+Resource        ../../../Tasks/Cupo/Tareas Dejar Cupo Pendiente.robot
 Resource        ../../../Tasks/Login.robot
 Resource        ../../../Tasks/Menu.robot
 Resource        ../../../Global Definitions/Variables.robot
@@ -55,7 +56,7 @@ UsabilidadBusquedaAvanzadaProducto
     GIVEN Tareas Validar Cupo.Ingresa Carta de porte  123412345678
         AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
     WHEN Tareas Validar Cupo.Va a la busqueda avanzada de Producto
-        AND Tareas Busqueda Avanzada Producto.Buscar producto por codigo  ${gIdSoja}
+        AND Tareas Busqueda Avanzada Producto.Busca producto por codigo  ${gIdSoja}
     THEN Evaluaciones Validar Cupo.Sistema debe visualizar descripcion del producto seleccionado  ${gIdSoja}
 
 UsabilidadFinalidadesActivas
@@ -77,7 +78,7 @@ FlujoOkCerealSinCupoSinWsAfip
         AND Tareas Validar Cupo.Decide aceptar
         AND Tareas Asignar Tarjeta.Asigna Tarjeta  83
     THEN Evaluaciones Validar Cupo.Sistema debe informar el ingreso exitoso
-        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento   83
+        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento Pendiente Control  83
         AND Evaluaciones Validar Cupo.Sistema debe volver al estado inicial de la pantalla
 
 FlujoOkCerealConCupoSinWsAfip
@@ -90,5 +91,17 @@ FlujoOkCerealConCupoSinWsAfip
         AND Tareas Validar Cupo.Decide aceptar
         AND Tareas Asignar Tarjeta.Asigna Tarjeta   82
     THEN Evaluaciones Validar Cupo.Sistema debe informar el ingreso exitoso
-        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento   82
+        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento Pendiente Control  82
+        AND Evaluaciones Validar Cupo.Sistema debe volver al estado inicial de la pantalla
+
+FlujoDejarPendiente
+    [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
+    [Teardown]  Disconnect From Database
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte      888811111118
+        AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
+    WHEN Tareas Validar Cupo.Decide dejar pendiente el Cupo
+        AND Tareas Dejar Cupo Pendiente.Acepta dejar pendiente el cupo  1  Prueba
+    THEN Evaluaciones Validar Cupo.Sistema debe informar la accion dejar pendiente exitosa
+        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento Pendiente Cupo     888811111118
         AND Evaluaciones Validar Cupo.Sistema debe volver al estado inicial de la pantalla

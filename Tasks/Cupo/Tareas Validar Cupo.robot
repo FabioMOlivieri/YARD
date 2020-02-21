@@ -47,4 +47,7 @@ Va a la busqueda avanzada de Producto
 Realiza Busqueda Rapida Sede
     [Arguments]     ${valor}
     Acciones Validar Cupo.Ingresar Sede     ${valor}
+
+Decide dejar pendiente el Cupo
+    Acciones Validar Cupo.Presionar Dejar Pendiente
       

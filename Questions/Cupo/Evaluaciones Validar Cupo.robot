@@ -17,6 +17,12 @@ ${QueryValidarMovimientoGuardado}   SELECT M.*
 ${QueryValidarFinalidades}      SELECT NAME_PURPOSE FROM T_PURPOSE P
 ...     INNER JOIN T_CIRCUIT_PURPOSE CP ON P.ID_PURPOSE = CP.ID_PURPOSE
 ...     WHERE P.ACTIVE = 1 AND CP.ID_CIRCUIT =  
+${QueryValidarMovimientoPendienteCupo}  select * 
+...     FROM T_MOVEMENT 
+...     WHERE CONVERT(date,ENTRY_DATE) = CONVERT(date,GETDATE()) 
+...         AND ID_MOVEMENT_STATUS = 22 AND ID_CIRCUIT = 51 
+...         AND CARRIAGE_DOCUMENT_NUMBER = 
+
 
 **Keywords
 Tipo de producto debe ser ${aTipoProducto}
@@ -88,15 +94,23 @@ Sistema debe recuperar datos del cupo ingresado
 Sistema debe informar el ingreso exitoso
     Page Should Contain  Se aceptó el ingreso de la descarga
 
+Sistema debe informar la accion dejar pendiente exitosa
+    Page Should Contain  La descarga quedó en estado Pendiente
+
 Sistema debe volver al estado inicial de la pantalla
     Element Text Should Be  ${locTxtNumeroDocumentoPorte}  ${EMPTY}
     Element Should Be Focused  ${locTxtNumeroDocumentoPorte}
 
-Sistema debe guardar el movimiento
+Sistema debe guardar el movimiento Pendiente Control
     [Arguments]     ${Tarjeta}
     ${Consulta}     Set Variable  ${QueryValidarMovimientoGuardado} '${Tarjeta}'
     Check If Exists In Database    ${Consulta}
-    
+
+Sistema debe guardar el movimiento Pendiente Cupo
+    [Arguments]     ${NroDocPorte}
+    ${Consulta}     Set Variable  ${QueryValidarMovimientoPendienteCupo} '${NroDocPorte}'
+    Check If Exists In Database    ${Consulta}
+
 Sistema debe visualizar descripcion del producto seleccionado
     [Arguments]     ${CodigoProducto}
     ${ResultadoQuery}=  Query  SELECT NAME_PRODUCT FROM T_PRODUCT WHERE ID_PRODUCT = ${CodigoProducto} 

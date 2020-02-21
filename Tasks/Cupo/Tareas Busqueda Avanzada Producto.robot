@@ -1,8 +1,8 @@
 *** Settings ***
-Resource        ../../Actions/Popups generales/Acciones Busqueda Avanzada Producto.robot
+Resource        ../../Actions/Cupo/Acciones Busqueda Avanzada Producto.robot
 
 *** Keywords ***
-Buscar producto por codigo
+Busca producto por codigo
     [Arguments]     ${aCodigoProducto}
     Acciones Busqueda Avanzada Producto.Ingresar Codigo Producto  ${aCodigoProducto}
     Acciones Busqueda Avanzada Producto.Presionar Buscar
