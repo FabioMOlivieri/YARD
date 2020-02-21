@@ -8,6 +8,7 @@ Resource        ../../../Tasks/Menu.robot
 Resource        ../../../Global Definitions/Variables.robot
 Resource        ../../../Global Definitions/Constantes.robot
 Resource        ../../../Questions/Cupo/Evaluaciones Validar Cupo.robot
+Resource        ../../../Libraries Proxy/Selenium Proxy.robot
 Suite Setup     Run Keywords  Iniciar Aplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}     AND     Ir a Validar Cupo
 Suite Teardown  Cerrar Pantalla
 Library         DatabaseLibrary
@@ -65,29 +66,53 @@ UsabilidadFinalidadesActivas
     GIVEN Tareas Validar Cupo.Ingresa Carta de porte  123412345678
         AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
         AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilLDC}    ${gCuilLDC}   ${gCuilZeni}    ${gIdFinalidadCV}   ${gIdMotivoCV}
-    THEN Evaluaciones Validar Cupo.Sistema debe visualizar todas las finalidades activas
+    THEN Evaluaciones Validar Cupo.Sistema debe visualizar todas las finalidades activas    ${gIdCircuitoDescargaCamionCerealTimbues}
 
 ### CIRCUITOS ####
 FlujoOkCerealSinCupoSinWsAfip 
     [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
     [Teardown]  Disconnect From Database
-    GIVEN Tareas Validar Cupo.Ingresa Carta de porte      888811111117
-    WHEN Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+    GIVEN Tareas Validar Cupo.Deshabilita Accion WS Afip  ${gWorkstationGeneralTimbues}
+        AND Refrescar pagina
+    WHEN Tareas Validar Cupo.Ingresa Carta de porte      888811111119
+        AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
         AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
-        AND Tareas Validar Cupo.Ingresa Datos CTG    1   1   ${gCuilTransportista}   ${gCuilChofer}  1
+        AND Tareas Validar Cupo.Ingresa Datos CTG    1  ${gCuilTransportista}   ${gCuilChofer}  1
+        AND Tareas Validar Cupo.Ingresa codigo cancelacion CTG  1  
         AND Tareas Validar Cupo.Decide aceptar
-        AND Tareas Asignar Tarjeta.Asigna Tarjeta  83
+        AND Tareas Asignar Tarjeta.Asigna Tarjeta  96
     THEN Evaluaciones Validar Cupo.Sistema debe informar el ingreso exitoso
-        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento Pendiente Control  83
+        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento Pendiente Control  96
+        AND Evaluaciones Validar Cupo.Sistema debe volver al estado inicial de la pantalla
+
+FlujoOkCerealSinCupoConWsAfipIncorrecto 
+    [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
+    [Teardown]  Disconnect From Database
+    GIVEN Tareas Validar Cupo.Habilita Accion WS Afip  ${gWorkstationGeneralTimbues}
+        AND Refrescar pagina
+    WHEN Tareas Validar Cupo.Ingresa Carta de porte      888811111121
+        AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
+        AND Tareas Validar Cupo.Ingresa Datos CTG    1  ${gCuilTransportista}   ${gCuilChofer}  1
+        AND Tareas Validar Cupo.Decide aceptar
+        AND Tareas Asignar Tarjeta.Asigna Tarjeta  81
+        Sleep   5
+        AND Tareas Validar Cupo.Ingresa codigo cancelacion CTG  1  
+        AND Tareas Validar Cupo.Decide aceptar
+    THEN Evaluaciones Validar Cupo.Sistema debe informar el ingreso exitoso
+        AND Evaluaciones Validar Cupo.Sistema debe guardar el movimiento Pendiente Control  81
         AND Evaluaciones Validar Cupo.Sistema debe volver al estado inicial de la pantalla
 
 FlujoOkCerealConCupoSinWsAfip
     [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
     [Teardown]  Disconnect From Database
-    GIVEN Tareas Validar Cupo.Ingresa Carta de porte      888811111116
-    WHEN Tareas Validar Cupo.Selecciona Ingreso con Cupo
+    GIVEN Tareas Validar Cupo.Deshabilita Accion WS Afip  ${gWorkstationGeneralTimbues}
+        AND Refrescar pagina
+    WHEN Tareas Validar Cupo.Ingresa Carta de porte      888811111116
+        AND Tareas Validar Cupo.Selecciona Ingreso con Cupo
         AND Tareas Validar Cupo.Ingresa Cupo   TMB-SOJ-20191212-5314
-        AND Tareas Validar Cupo.Ingresa Datos CTG    1   1   ${gCuilTransportista}   ${gCuilChofer}  1
+        AND Tareas Validar Cupo.Ingresa Datos CTG    1  ${gCuilTransportista}   ${gCuilChofer}  1
+        AND Tareas Validar Cupo.Ingresa codigo cancelacion CTG  1  
         AND Tareas Validar Cupo.Decide aceptar
         AND Tareas Asignar Tarjeta.Asigna Tarjeta   82
     THEN Evaluaciones Validar Cupo.Sistema debe informar el ingreso exitoso

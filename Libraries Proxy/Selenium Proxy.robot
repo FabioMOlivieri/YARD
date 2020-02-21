@@ -76,3 +76,5 @@ Pagina debe contener valor
     [Arguments]     ${aValor}
     Page Should Contain  ${aValor}
 
+Refrescar pagina
+    Reload Page  

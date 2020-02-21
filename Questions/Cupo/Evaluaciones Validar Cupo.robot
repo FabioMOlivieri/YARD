@@ -117,8 +117,9 @@ Sistema debe visualizar descripcion del producto seleccionado
     Element Text Should Be  ${loclblDescripcionProducto}  ${ResultadoQuery[0][0]}
 
 Sistema debe visualizar todas las finalidades activas
+    [Arguments]     ${aIdCircuito}
     ${lista}     Get List Items  ${locDdlFinalidad}
-    ${Consulta}     Set Variable  ${QueryValidarFinalidades} 51
+    ${Consulta}     Set Variable  ${QueryValidarFinalidades} ${aIdCircuito}
     ${ResultadoConsulta}=   Query  ${Consulta}
     ${cantFilas}=   Get Length  ${ResultadoConsulta}
     FOR     ${i}    IN RANGE    1   ${cantFilas}

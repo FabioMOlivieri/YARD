@@ -1,6 +1,7 @@
 *** Settings ***
 Resource        ../../Actions/Cupo/Acciones Validar Cupo.robot
 Resource        ../Menu.robot
+Library         DatabaseLibrary
 
 *** Keywords ***
 Ingresa Carta de porte
@@ -31,12 +32,15 @@ Ingresa Datos Documento
     Acciones Validar Cupo.Seleccionar Motivo Cupo     ${aIdMotivo}
 
 Ingresa Datos CTG
-    [Arguments]     ${aCTG}     ${aCodCancCTG}  ${aCuilTransportista}   ${aCuilChofer}  ${aKgNetos}
+    [Arguments]     ${aCTG}     ${aCuilTransportista}   ${aCuilChofer}  ${aKgNetos}
     Acciones Validar Cupo.Ingresar CTG  ${aCTG}
-    Acciones Validar Cupo.Ingresar Codigo Cancelacion CTG  ${aCodCancCTG}
     Acciones Validar Cupo.Ingresar Transportista  ${aCuilTransportista}
     Acciones Validar Cupo.Ingresar Chofer  ${aCuilChofer}
     Acciones Validar Cupo.Ingresar KG Netos  ${aKgNetos}
+
+Ingresa codigo cancelacion CTG
+    [Arguments]     ${aCodCancCTG}
+    Acciones Validar Cupo.Ingresar Codigo Cancelacion CTG  ${aCodCancCTG}
 
 Decide aceptar
     Acciones Validar Cupo.Presionar Aceptar
@@ -50,4 +54,13 @@ Realiza Busqueda Rapida Sede
 
 Decide dejar pendiente el Cupo
     Acciones Validar Cupo.Presionar Dejar Pendiente
-      
+
+Deshabilita Accion WS Afip
+    [Arguments]     ${IdPuestoTrabajo}
+    ${UpdateOutput}=    Execute Sql String    UPDATE T_WORKSTATION_ACTION_MODE SET IS_AUTOMATIC = 0 WHERE ID_WORKSTATION = ${IdPuestoTrabajo} AND ID_ACTION = 7;
+    Should Be Equal As Strings    ${UpdateOutput}    None
+
+Habilita Accion WS Afip
+    [Arguments]     ${IdPuestoTrabajo}
+    ${UpdateOutput}=    Execute Sql String    UPDATE T_WORKSTATION_ACTION_MODE SET IS_AUTOMATIC = 1 WHERE ID_WORKSTATION = ${IdPuestoTrabajo} AND ID_ACTION = 7;
+    Should Be Equal As Strings    ${UpdateOutput}    None

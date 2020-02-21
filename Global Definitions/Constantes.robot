@@ -11,3 +11,7 @@ ${gCuilChofer}      20252208578
 ${gIdFinalidadCV}   1
 #MotivoCupo
 ${gIdMotivoCV}  1
+#Circuitos
+${gIdCircuitoDescargaCamionCerealTimbues}   51
+#Puestos de trabajo
+${gWorkstationGeneralTimbues}   8
