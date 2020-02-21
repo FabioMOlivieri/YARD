@@ -113,11 +113,7 @@ Ingresar Chofer
     [Arguments]    ${documentoChofer}
     ${txtChofer}    Capturar Elemento    ${locTxtChofer}
     Ingresar Texto    ${txtChofer}    ${documentoChofer}
-<<<<<<< HEAD:Actions/Cupo/Validar Cupo.robot
-
-=======
     Press Keys  ${txtChofer}  TAB
->>>>>>> 09f38fcd69fd91ce2feafb7b97faa812e4201bd5:Actions/Cupo/Acciones Validar Cupo.robot
 Presionar Busqueda Avanzada Chofer
     ${btnBuscarChofer}    Capturar Elemento    ${locBtnBuscarChofer}
     Presionar Boton    ${btnBuscarChofer}
