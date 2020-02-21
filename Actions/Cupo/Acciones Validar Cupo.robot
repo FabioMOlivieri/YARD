@@ -110,9 +110,10 @@ Presionar Busqueda Avanzada Transportista
     ${btnBuscarTransportista}    Capturar Elemento    ${locBtnBuscarTransportista}
     Presionar Boton    ${btnBuscarTransportista}
 Ingresar Codigo Cancelacion CTG
-    [Arguments]    ${CodigoCancelacionCTG}
+    [Arguments]    ${CodigoCancelacionCTG} 
     ${txtCodigoCancelacionCTG}    Capturar Elemento    ${locTxtCodigoCancelacionCTG}
     Ingresar Texto    ${txtCodigoCancelacionCTG}    ${CodigoCancelacionCTG}
+
 Ingresar Chofer
     [Arguments]    ${documentoChofer}
     ${txtChofer}    Capturar Elemento    ${locTxtChofer}
@@ -121,13 +122,16 @@ Ingresar Chofer
 Presionar Busqueda Avanzada Chofer
     ${btnBuscarChofer}    Capturar Elemento    ${locBtnBuscarChofer}
     Presionar Boton    ${btnBuscarChofer}
+
 Seleccionar Sin Confirmacion CTG
     ${chkSinConfirmarCTG}    Capturar Elemento    ${locChkSinConfirmarCTG}
     Presionar Boton  ${optCchkSinConfirmarCTGonCupo}
+
 Ingresar KG Netos
     [Arguments]    ${KilosNeto}
     ${txtKgNeto}    Capturar Elemento    ${locTxtKgNeto}
     Ingresar Texto    ${txtKgNeto}    ${KilosNeto}
+    
 #ACCIONES
 Presionar Aceptar
     ${btnAceptar}    Capturar Elemento    ${locBtnAceptar}

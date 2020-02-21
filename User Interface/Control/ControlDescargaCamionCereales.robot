@@ -1,0 +1,25 @@
+**Variables
+${locTxtNumeroDocumentoPorte}     xpath://*[@id="controlarCerealesSection"]/form/yrd-datos-documento-controlar-descarga-cereales/div[2]/div/fieldset/div[1]/div/yrd-carta-porte-datos-documento/fieldset/div[1]/div[1]/yrd-texto-mascara-con-etiqueta/div/div/input
+${locTxtCEE}                      id:numeroCEE
+${locTxtCTG}                      xpath://*[@id="controlarCerealesSection"]/form/yrd-datos-documento-controlar-descarga-cereales/div[2]/div/fieldset/div[1]/div/yrd-carta-porte-datos-documento/fieldset/div[2]/div[1]/yrd-numero-con-etiqueta/div/div/input
+${locTxtFechaVencimiento}         xpath://*[@id="controlarCerealesSection"]/form/yrd-datos-documento-controlar-descarga-cereales/div[2]/div/fieldset/div[1]/div/yrd-carta-porte-datos-documento/fieldset/div[2]/div[3]/yrd-fecha-con-etiqueta/div/div/div/input
+${locTxtTitular}                  id:inputTitular
+${locTxtCorredorComprador}        id:inputCorredor
+${locTxtTransportista}            id:inputTransportista
+${locTxtChofer}                   id:inputChofer
+${locTxtProducto}                 id:inputCodigoProducto
+${locTxtLocalidad}                xpath://*[@id="controlarCerealesSection"]/form/yrd-datos-documento-controlar-descarga-cereales/div[2]/div/fieldset/div[3]/div/yrd-granos-especies-datos-documento/fieldset/div[5]/div[2]/yrd-autocomplete-localidad/div/div/input
+${locTxtPatenteCamion}            xpath://*[@id="controlarCerealesSection"]/form/yrd-datos-documento-controlar-descarga-cereales/div[2]/div/fieldset/div[5]/div/yrd-datos-transporte-datos-documento/fieldset/div[1]/div[1]/yrd-texto-con-etiqueta/div/div/input
+${locTxtPatenteAcoplado}          xpath://*[@id="controlarCerealesSection"]/form/yrd-datos-documento-controlar-descarga-cereales/div[2]/div/fieldset/div[5]/div/yrd-datos-transporte-datos-documento/fieldset/div[1]/div[2]/yrd-texto-con-etiqueta/div/div/input
+${locTxtKmRecorridos}             id:kilometrosRecorridos
+${locTxtTarifaReferencial}        id:tarifaReferencia
+${locTxtTarifaTN}                 id:tarifaTN
+${locTxtCodigoCancelacionCTG}     xpath://*[@id="controlarCerealesSection"]/form/yrd-datos-documento-controlar-descarga-cereales/div[3]/div/yrd-confirmacion-arribo-ctg-datos-documento/fieldset/div/div[2]/yrd-numero-con-etiqueta/div/div/input
+${locBtnDejarPendiente}           xpath://*[@id="controlarCerealesSection"]/form/div/div[1]/button[1]
+${locBtnConsultarAFIP}            xpath://*[@id="controlarCerealesSection"]/form/div/div[1]/button[2]
+${locBtnCerrarAFIP}               xpath://*[@id="consultarDatosAfipSection"]/button
+${locBtnAceptar}                  xpath://*[@id="controlarCerealesSection"]/form/div/div[2]/button[2]
+${locBtnCancelar}                 xpath://*[@id="controlarCerealesSection"]/form/div/div[2]/button[3]
+${locBtnAceptarTarjeta}           id:btnAcceptModal 
+${locBtnCancelarTarjeta}          id:btnCancelModal 
+${locMensajeVerificar}            xpath://*[@id="toast-container"]
