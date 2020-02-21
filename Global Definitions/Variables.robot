@@ -13,3 +13,8 @@ ${gDBUserUat}     NEORIS\\ldc_yard_app_pool_id
 ${gDBPassUat}     +qHIe`=R1KkwaT|V0"y,
 ${gDBHostUat}     ARROSVMSQL043
 ${gDBPortUat}     1433
+<<<<<<< HEAD
+=======
+#Selenium
+${gSpeed}       0.2 Seconds
+>>>>>>> 09f38fcd69fd91ce2feafb7b97faa812e4201bd5

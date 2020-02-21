@@ -1,10 +1,12 @@
 *** Settings ***
 Resource        ../Libraries Proxy/Selenium Proxy.robot
 Resource        ../Actions/Login.robot
+Resource        ../Global Definitions/Variables.robot
 
 *** Keywords ***
 Iniciar Aplicacion
     [Arguments]    ${aUrl}    ${aBrowser}    ${aUsuario}    ${aContrasenia}    ${aTerminal}
+    Set Selenium Speed  ${gSpeed}
     AbrirNavegador    ${aUrl}    ${aBrowser}
     Indicar usuario  ${aUsuario}    ${aContrasenia}
     Indicar Terminal  ${aTerminal}

@@ -12,6 +12,7 @@ ${locTxtUsuarioSAN}    xpath://*[@id="validarCupoSection"]/form/yrd-cupo/fieldse
 #Datos Documento
 ${locTxtProducto}  id:inputCodigoProducto
 ${locBtnBuscarProducto}    xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[1]/yrd-buscador-producto/div/div/div/div[1]/button
+${loclblDescripcionProducto}    xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[1]/yrd-buscador-producto/div/strong
 ${locTxtVendedor}  id:inputVendedor
 ${locBtnBuscarVendedor}    xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[2]/yrd-buscador-vendedor/div/div/div/div[1]/button
 ${locTxtCorredor}  id:inputCorredor

@@ -1,11 +1,11 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Cupo/Validar Cupo.robot
+Resource        ../../User Interface/Cupo/Controles Validar Cupo.robot
 
 *** Keywords ***
 #CIRCUITO
 Seleccionar Tipo Producto
-    [Arguments] ${IdTipoProducto}
+    [Arguments]     ${IdTipoProducto}
     ${ddlTipoProducto}  Capturar Elemento  ${locDdlTipoProducto}
     Elegir Opcion Lista Por Valor  ${ddlTipoProducto}  ${IdTipoProducto}  
 #DOCUMENTO DE PORTE
@@ -15,7 +15,7 @@ Seleccionar Tipo Documento Porte
     Elegir Opcion Lista Por Valor  ${ddlTipoDocumentoPorte}  ${IdTipoDocumentoPorte} 
 Ingresar Numero Documento Porte
     [Arguments]    ${NumeroDocumentoPorte}
-    ${txtNumeroDocumentoPorte}    Capturar Elemento    ${locTxtNumeroDocumentoPorte}
+    ${txtNumeroDocumentoPorte}    Capturar Elemento   ${locTxtNumeroDocumentoPorte}
     Ingresar Texto    ${txtNumeroDocumentoPorte}    ${NumeroDocumentoPorte}
 #DATOS CUPO
 Seleccionar Opcion Con Cupo
@@ -25,6 +25,7 @@ Ingresar Codigo Cupo
     [Arguments]    ${NumeroCupo}
     ${txtCodigoCupo}    Capturar Elemento    ${locTxtCodigoCupo}
     Ingresar Texto    ${txtCodigoCupo}    ${NumeroCupo}
+    Press Keys  ${txtCodigoCupo}  TAB
 Seleccionar Opcion Sin Cupo
     ${optSinCupo}    Capturar Elemento    ${locOptSinCupo}
     Presionar Boton  ${optSinCupo}
@@ -33,6 +34,7 @@ Ingresar Producto
     [Arguments]    ${CodigoProducto}
     ${txtProducto}    Capturar Elemento    ${locTxtProducto}
     Ingresar Texto    ${txtProducto}    ${CodigoProducto}
+    Press Keys  ${locTxtProducto}  TAB
 Presionar Busqueda Avanzada Producto
     ${btnBuscarProducto}    Capturar Elemento    ${locBtnBuscarProducto}
     Presionar Boton    ${btnBuscarProducto}
@@ -40,6 +42,7 @@ Ingresar Vendedor
     [Arguments]    ${CuitVendedor}
     ${txtVendedor}    Capturar Elemento    ${locTxtVendedor}
     Ingresar Texto    ${txtVendedor}    ${CuitVendedor}
+    Press Keys  ${txtVendedor}  TAB
 Presionar Busqueda Avanzada Vendedor
     ${btnBuscarVendedor}    Capturar Elemento    ${locBtnBuscarVendedor}
     Presionar Boton    ${btnBuscarVendedor}
@@ -47,6 +50,7 @@ Ingresar Corredor
     [Arguments]    ${CuitCorredor}
     ${txtCorredor}    Capturar Elemento    ${locTxtCorredor}
     Ingresar Texto    ${txtCorredor}    ${CuitCorredor}
+    Press Keys  ${txtCorredor}  TAB
 Presionar Busqueda Avanzada Corredor
     ${btnBuscarCorredor}    Capturar Elemento    ${locBtnBuscarCorredor}
     Presionar Boton    ${btnBuscarCorredor}
@@ -54,6 +58,7 @@ Ingresar Destinatario
     [Arguments]    ${CuitDestinatario}
     ${txtDestinatario}    Capturar Elemento    ${locTxtDestinatario}
     Ingresar Texto    ${txtDestinatario}    ${CuitDestinatario}
+    Press Keys  ${txtDestinatario}  TAB
 Presionar Busqueda Avanzada Destinatario
     ${btnDestinatario}    Capturar Elemento    ${locBtnDestinatario}
     Presionar Boton    ${btnDestinatario}
@@ -70,6 +75,7 @@ Ingresar Titular
     [Arguments]    ${CuitTitular}
     ${txtTitular}    Capturar Elemento    ${locTxtTitular}
     Ingresar Texto    ${txtTitular}    ${CuitTitular}
+    Press Keys  ${txtTitular}  TAB
 Presionar Busqueda Avanzada Titular
     ${btnBuscarTitular}    Capturar Elemento    ${locBtnBuscarTitular}
     Presionar Boton    ${btnBuscarTitular}
@@ -94,6 +100,7 @@ Ingresar Transportista
     [Arguments]    ${CuitTransportista}
     ${txtTransportista}    Capturar Elemento    ${locTxtTransportista}
     Ingresar Texto    ${txtTransportista}    ${CuitTransportista}
+    Press Keys  ${txtTransportista}  TAB
 Presionar Busqueda Avanzada Transportista
     ${btnBuscarTransportista}    Capturar Elemento    ${locBtnBuscarTransportista}
     Presionar Boton    ${btnBuscarTransportista}
@@ -106,7 +113,11 @@ Ingresar Chofer
     [Arguments]    ${documentoChofer}
     ${txtChofer}    Capturar Elemento    ${locTxtChofer}
     Ingresar Texto    ${txtChofer}    ${documentoChofer}
+<<<<<<< HEAD:Actions/Cupo/Validar Cupo.robot
 
+=======
+    Press Keys  ${txtChofer}  TAB
+>>>>>>> 09f38fcd69fd91ce2feafb7b97faa812e4201bd5:Actions/Cupo/Acciones Validar Cupo.robot
 Presionar Busqueda Avanzada Chofer
     ${btnBuscarChofer}    Capturar Elemento    ${locBtnBuscarChofer}
     Presionar Boton    ${btnBuscarChofer}
