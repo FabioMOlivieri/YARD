@@ -9,6 +9,7 @@
       "OperatingSystem-3.0.4",
       "String-3.0.4",
       "SeleniumLibrary-3.3.1",
+      "DateTime-3.1.1",
       {
         "name": "DatabaseLibrary",
         "version": "1.2.4",

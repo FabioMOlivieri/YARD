@@ -1,10 +1,10 @@
 *** Variables ***
 # web
 ${gWebUrlUat}     http://arrosvmapp313/ldc-yard/login
-${gBrowserChrome}    headlesschrome
+${gBrowserChrome}    chrome
 ${gUser}          ldc_yard_app_pool_id
 ${gContrasenia}    +qHIe`=R1KkwaT|V0"y,
-${gIDTerminalTimbues}    137
+${gIDTerminalTimbues}    443
 # APIs
 ${gAppUrlUat}    http://arrosvmapp313/Ldc.Yard.Web.Api/api
 # DB
