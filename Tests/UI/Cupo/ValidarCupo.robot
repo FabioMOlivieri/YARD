@@ -1,6 +1,7 @@
 *** Settings ***
 Resource        ../../../Tasks/Cupo/Tareas Validar Cupo.robot
-Resource        ../../../Tasks/Cupo/Tareas Asignar Tarjeta.robot
+Resource        ../../../Tasks/Popups generales/Tareas Asignar Tarjeta.robot
+Resource        ../../../Tasks/Popups generales/Tareas Busqueda Avanzada Producto.robot
 Resource        ../../../Tasks/Login.robot
 Resource        ../../../Tasks/Menu.robot
 Resource        ../../../Global Definitions/Variables.robot
@@ -47,6 +48,15 @@ UsabilidadRecuperarDatoDocumentoDeCupo
         AND Tareas Validar Cupo.Selecciona Ingreso con Cupo
     WHEN Tareas Validar Cupo.Ingresa Cupo  TMB-SOJ-20191016-4514
     THEN Evaluaciones Validar Cupo.Sistema debe recuperar datos del cupo ingresado     TMB-SOJ-20191016-4514
+
+UsabilidadBusquedaAvanzadaProducto
+    [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
+    [Teardown]  Disconnect From Database
+    GIVEN Tareas Validar Cupo.Ingresa Carta de porte  123412345678
+        AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
+    WHEN Tareas Validar Cupo.Va a la busqueda avanzada de Producto
+        AND Tareas Busqueda Avanzada Producto.Buscar producto por codigo  ${gIdSoja}
+    THEN Evaluaciones Validar Cupo.Sistema debe visualizar descripcion del producto seleccionado  ${gIdSoja}
 
 ### CIRCUITOS ####
 FlujoOkCerealSinCupoSinWsAfip 

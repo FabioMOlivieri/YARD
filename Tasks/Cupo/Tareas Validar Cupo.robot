@@ -40,3 +40,6 @@ Ingresa Datos CTG
 
 Decide aceptar
     Acciones Validar Cupo.Presionar Aceptar
+
+Va a la busqueda avanzada de Producto
+    Presionar Busqueda Avanzada Producto

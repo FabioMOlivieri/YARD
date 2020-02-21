@@ -1,6 +1,5 @@
 *** Settings ***
-Resource        ../../Actions/Cupo/Acciones Asignar Tarjeta.robot
-Resource        ../Menu.robot
+Resource        ../../Actions/Popups generales/Acciones Asignar Tarjeta.robot
 
 *** Keywords ***
 Asigna Tarjeta

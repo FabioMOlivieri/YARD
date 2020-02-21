@@ -1,0 +1,7 @@
+**Variables
+${locTxtCodigoProducto}     xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[1]/yrd-buscador-producto/yrd-advanced-search-form/yrd-modal/div/div/div/div[2]/fieldset[1]/div[1]/yrd-texto-con-etiqueta[1]/div/div/input
+${locTxtDescripcionProducto}    xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[1]/yrd-buscador-producto/yrd-advanced-search-form/yrd-modal/div/div/div/div[2]/fieldset[1]/div[1]/yrd-texto-con-etiqueta[2]/div/div/input
+${locBtnBuscar}     xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[1]/yrd-buscador-producto/yrd-advanced-search-form/yrd-modal/div/div/div/div[2]/fieldset[1]/div[2]/button
+${locPrimerCheck}   xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[1]/yrd-buscador-producto/yrd-advanced-search-form/yrd-modal/div/div/div/div[2]/fieldset[2]/yrd-data-grid/div/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[1]/div/label/input
+${locBtnAceptarBusqueda}    xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[1]/yrd-buscador-producto/yrd-advanced-search-form/yrd-modal/div/div/div/div[3]/button[1]
+${locBtnCancelarBusqueda}   xpath://*[@id="validarCupoSection"]/form/yrd-datos-documento-validar-cupo/fieldset/div[1]/div[1]/yrd-buscador-producto/yrd-advanced-search-form/yrd-modal/div/div/div/div[3]/button[2]

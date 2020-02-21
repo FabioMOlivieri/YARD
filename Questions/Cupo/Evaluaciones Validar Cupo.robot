@@ -94,3 +94,7 @@ Sistema debe guardar el movimiento
     ${Consulta}     Set Variable  ${QueryValidarMovimientoGuardado} '${Tarjeta}'
     Check If Exists In Database    ${Consulta}
     
+Sistema debe visualizar descripcion del producto seleccionado
+    [Arguments]     ${CodigoProducto}
+    ${ResultadoQuery}=  Query  SELECT NAME_PRODUCT FROM T_PRODUCT WHERE ID_PRODUCT = ${CodigoProducto} 
+    Element Text Should Be  ${loclblDescripcionProducto}  ${ResultadoQuery[0][0]}
