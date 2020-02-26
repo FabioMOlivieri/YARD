@@ -7,7 +7,7 @@ Library         Collections
 ${QueryValidarCupo}     SELECT P.ALIAS, SS.FISCAL_CODE, SB.FISCAL_CODE, SC.FISCAL_CODE, QC.ID_PURPOSE, QC.ID_QUOTA_REASON 
 ...     FROM T_QUOTA_DET_CODE QC INNER JOIN T_PRODUCT P ON P.ID_PRODUCT = QC.ID_PRODUCT 
 ...     INNER JOIN T_SOCIETY SS ON SS.ID_SOCIETY = QC.ID_SELLER 
-...     INNER JOIN T_SOCIETY SB ON SB.ID_SOCIETY = QC.ID_BROKER 
+...     LEFT JOIN T_SOCIETY SB ON SB.ID_SOCIETY = QC.ID_BROKER 
 ...     INNER JOIN T_SOCIETY SC ON SC.ID_SOCIETY = QC.ID_CONSIGNEE 
 ...     WHERE QUOTA_CODE =
 ${QueryValidarMovimientoGuardado}   SELECT M.* 
@@ -85,17 +85,26 @@ Sistema debe recuperar datos del cupo ingresado
     ${Query}    Set Variable  ${QueryValidarCupo} '${aCupo}'  
     ${ResultadoQuery}   Query   ${Query}
     Should Be Equal As Integers  ${Producto}    ${ResultadoQuery[0][0]}
-    Should Be Equal  ${Vendedor}    ${ResultadoQuery[0][1]}
-    Should Be Equal  ${Corredor}    ${ResultadoQuery[0][2]}
+    Run Keyword If  ${ResultadoQuery[0][1]} is not None  Should Be Equal  ${Vendedor}    ${ResultadoQuery[0][1]}
+    Run Keyword If  ${ResultadoQuery[0][2]} is not None  Should Be Equal  ${Corredor}    ${ResultadoQuery[0][2]}
     Should Be Equal  ${Destinatario}    ${ResultadoQuery[0][3]}
     Should Be Equal As Integers  ${Finalidad}   ${ResultadoQuery[0][4]}
     Should Be Equal As Integers  ${MovitoCupo}      ${ResultadoQuery[0][5]}
+
+Sistema debe informar cupo anterior o posterior
+    Page Should Contain  La fecha del Cupo es anterior o posterior a la permitida 
+
+Sistema debe marcar el ingreso sin cupo
+    Checkbox Should Be Selected  ${locChkSinCupo}
 
 Sistema debe informar el ingreso exitoso
     Page Should Contain  Se aceptó el ingreso de la descarga
 
 Sistema debe informar la accion dejar pendiente exitosa
     Page Should Contain  La descarga quedó en estado Pendiente
+
+Sistema debe informar que el cupo ya fue utilizado
+    Page Should Contain  El Cupo ingresado ya fue utilizado
 
 Sistema debe volver al estado inicial de la pantalla
     Element Text Should Be  ${locTxtNumeroDocumentoPorte}  ${EMPTY}
@@ -105,6 +114,10 @@ Sistema debe guardar el movimiento Pendiente Control
     [Arguments]     ${Tarjeta}
     ${Consulta}     Set Variable  ${QueryValidarMovimientoGuardado} '${Tarjeta}'
     Check If Exists In Database    ${Consulta}
+
+Sistema debe marcar el cupo utilizado como Sin Cupo 
+    [Arguments]     ${Cupo}
+    Check If Exists In Database  SELECT * FROM T_QUOTA_DET_CODE WHERE QUOTA_CODE = '${Cupo}'
 
 Sistema debe guardar el movimiento Pendiente Cupo
     [Arguments]     ${NroDocPorte}
@@ -125,3 +138,34 @@ Sistema debe visualizar todas las finalidades activas
     FOR     ${i}    IN RANGE    1   ${cantFilas}
         Should Be Equal  ${ResultadoConsulta[${i}-1][0]}  ${lista[${i}]}
     END
+
+Sistema debe informar campos obligatorios sin cupo y sin WS AFIP
+    ${Producto}=   Get Value  ${locTxtProducto}
+    ${Vendedor}=    Get Value  ${locTxtVendedor}
+    ${Corredor}=    Get Value  ${locTxtCorredor}
+    ${Destinatario}=    Get Value  ${locTxtDestinatario}
+    ${Finalidad}=   Get Value  ${locDdlFinalidad}
+    ${MovitoCupo}=  Get Value  ${locDdlMotivoCupo}
+    Run Keyword If  '${Producto}' == '${EMPTY}'  Page Should Contain  El Campo Producto es requerido
+    Run Keyword If  '${Corredor}' == '${EMPTY}'  Page Should Contain  El Campo Corredor Comprador es requerido
+    Run Keyword If  '${Finalidad}' == '${EMPTY}'  Page Should Contain  El Campo Finalidad es requerido
+    Run Keyword If  '${Vendedor}' == '${EMPTY}'  Page Should Contain  El Campo Vendedor es requerido
+    Run Keyword If  '${Destinatario}' == '${EMPTY}'  Page Should Contain  El Campo Destinatario es requerido
+    Run Keyword If  '${MovitoCupo}' == '${EMPTY}'  Page Should Contain  El Campo Motivo Cupo es requerido
+    Sistema debe informar datos CTG obligatorios
+
+Sistema debe informar campos obligatorios con cupo y sin WS AFIP
+    Sistema debe informar datos CTG obligatorios
+
+Sistema debe informar datos CTG obligatorios
+    ${CTG}=  Get Value  ${locTxtCTG}
+    ${Transportista}=  Get Value  ${locTxtTransportista}
+    ${Chofer}=  Get Value  ${locTxtChofer}
+    ${KgNeto}=  Get Value  ${locTxtKgNeto}
+    Run Keyword If  '${CTG}' == '${EMPTY}'  Page Should Contain  El Campo CTG es requerido
+    Run Keyword If  '${Transportista}' == '${EMPTY}'  Page Should Contain  El Campo Transportista es requerido
+    Run Keyword If  '${Chofer}' == '${EMPTY}'  Page Should Contain  El Campo Chofer es requerido
+    Run Keyword If  '${KgNeto}' == '${EMPTY}'  Page Should Contain  El Campo Peso Neto es requerido
+
+Sistema debe informar tarjeta en uso
+    Page Should Contain  Tarjeta en uso
