@@ -1,12 +1,13 @@
 *** Settings ***
 Resource        ../../Actions/Cupo/Acciones Validar Cupo.robot
+Resource        ../../Global Definitions/Constantes.robot
 Resource        ../Menu.robot
 Library         DatabaseLibrary
 
 *** Keywords ***
 Ingresa Carta de porte
     [Arguments]     ${NroDocPorte}
-    Acciones Validar Cupo.Ingresar Numero Documento Porte  ${NroDocPorte}
+    Run Keyword If  '${NroDocPorte}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Numero Documento Porte  ${NroDocPorte}
 
 Selecciona Ingreso con Cupo
     Acciones Validar Cupo.Seleccionar Opcion Con Cupo
@@ -23,20 +24,21 @@ Ingresa Producto
     Acciones Validar Cupo.Ingresar Producto  ${aIdProducto}
 
 Ingresa Datos Documento
-    [Arguments]     ${aCodProducto}    ${aCuilVendedor}    ${aCuilCorredor}    ${aCuilDestinatario}    ${aIdFinalidad}   ${aIdMotivo}
-    Acciones Validar Cupo.Ingresar Producto   ${aCodProducto}
-    Acciones Validar Cupo.Ingresar Vendedor   ${aCuilVendedor}
-    Acciones Validar Cupo.Ingresar Corredor   ${aCuilCorredor}
-    Acciones Validar Cupo.Ingresar Destinatario   ${aCuilDestinatario}
-    Acciones Validar Cupo.Seleccionar Finalidad   ${aIdFinalidad}
-    Acciones Validar Cupo.Seleccionar Motivo Cupo     ${aIdMotivo}
+    [Arguments]     ${aCodProducto}    ${aCuilVendedor}    ${aCuilCorredor}    ${aCuilDestinatario}    ${aIdFinalidad}   ${aIdMotivo}   ${aIdSede}
+    Run Keyword If  '${aCodProducto}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Producto   ${aCodProducto}
+    Run Keyword If  '${aCuilVendedor}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Vendedor   ${aCuilVendedor}
+    Run Keyword If  '${aCuilCorredor}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Corredor   ${aCuilCorredor}
+    Run Keyword If  '${aCuilDestinatario}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Destinatario   ${aCuilDestinatario}
+    Run Keyword If  '${aIdFinalidad}' is not '${Empty}'  Acciones Validar Cupo.Seleccionar Finalidad   ${aIdFinalidad}
+    Run Keyword If  '${aIdFinalidad}' is not '${Empty}' and '${aIdMotivo}' is not '${Empty}'  Acciones Validar Cupo.Seleccionar Motivo Cupo     ${aIdMotivo}
+    Run Keyword If  ${aCuilVendedor} == ${gCuilLDC} and '${aIdSede}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Sede  ${aIdSede}
 
 Ingresa Datos CTG
     [Arguments]     ${aCTG}     ${aCuilTransportista}   ${aCuilChofer}  ${aKgNetos}
-    Acciones Validar Cupo.Ingresar CTG  ${aCTG}
-    Acciones Validar Cupo.Ingresar Transportista  ${aCuilTransportista}
-    Acciones Validar Cupo.Ingresar Chofer  ${aCuilChofer}
-    Acciones Validar Cupo.Ingresar KG Netos  ${aKgNetos}
+    Run Keyword If  '${aCTG}' is not '${Empty}'  Acciones Validar Cupo.Ingresar CTG  ${aCTG}
+    Run Keyword If  '${aCuilTransportista}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Transportista  ${aCuilTransportista}
+    Run Keyword If  '${aCuilChofer}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Chofer  ${aCuilChofer}
+    Run Keyword If  '${aKgNetos}' is not '${Empty}'  Acciones Validar Cupo.Ingresar KG Netos  ${aKgNetos}
 
 Ingresa codigo cancelacion CTG
     [Arguments]     ${aCodCancCTG}

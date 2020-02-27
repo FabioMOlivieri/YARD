@@ -67,7 +67,7 @@ UsabilidadFinalidadesActivas
     [Teardown]  Disconnect From Database
     GIVEN Tareas Validar Cupo.Ingresa Carta de porte  123412345678
         AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
-        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilLDC}    ${gCuilLDC}   ${gCuilZeni}    ${gIdFinalidadCV}   ${gIdMotivoCV}
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilLDC}    ${gCuilLDC}   ${gCuilZeni}    ${gIdFinalidadCV}   ${gIdMotivoCV}    ${gSedeCharata}
     THEN Evaluaciones Validar Cupo.Sistema debe visualizar todas las finalidades activas    ${gIdCircuitoDescargaCamionCerealTimbues}
 
 ## VALIDACIONES ###
@@ -98,7 +98,7 @@ ValidacionTarjetaEnUso
     GIVEN Refrescar pagina
         AND Tareas Validar Cupo.Ingresa Carta de porte      888811111119
         AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
-        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}     ${gSedeCharata}
         AND Tareas Validar Cupo.Ingresa Datos CTG    1  ${gCuilTransportista}   ${gCuilChofer}  1
         AND Tareas Validar Cupo.Ingresa codigo cancelacion CTG  1
     WHEN Tareas Validar Cupo.Decide aceptar
@@ -113,7 +113,7 @@ FlujoOkCerealSinCupoSinWsAfip
         AND Refrescar pagina
     WHEN Tareas Validar Cupo.Ingresa Carta de porte      888811111119
         AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
-        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}     ${gSedeCharata}
         AND Tareas Validar Cupo.Ingresa Datos CTG    1  ${gCuilTransportista}   ${gCuilChofer}  1
         AND Tareas Validar Cupo.Ingresa codigo cancelacion CTG  1  
         AND Tareas Validar Cupo.Decide aceptar
@@ -129,7 +129,7 @@ FlujoOkCerealSinCupoConWsAfipIncorrecto
         AND Refrescar pagina
     WHEN Tareas Validar Cupo.Ingresa Carta de porte      888811111121
         AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
-        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}     ${gSedeCharata}
         AND Tareas Validar Cupo.Ingresa Datos CTG    1  ${gCuilTransportista}   ${gCuilChofer}  1
         AND Tareas Validar Cupo.Decide aceptar
         AND Tareas Asignar Tarjeta.Asigna Tarjeta  81
@@ -162,7 +162,7 @@ FlujoDejarPendiente
     [Teardown]  Disconnect From Database
     GIVEN Tareas Validar Cupo.Ingresa Carta de porte      888811111118
         AND Tareas Validar Cupo.Selecciona Ingreso sin Cupo
-        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}
+        AND Tareas Validar Cupo.Ingresa Datos Documento  ${gIdSoja}  ${gCuilZeni}    ${gCuilZeni}    ${gCuilLDC}     ${gIdFinalidadCV}   ${gIdMotivoCV}     ${gSedeCharata}
     WHEN Tareas Validar Cupo.Decide dejar pendiente el Cupo
         AND Tareas Dejar Cupo Pendiente.Acepta dejar pendiente el cupo  1  Prueba
     THEN Evaluaciones Validar Cupo.Sistema debe informar la accion dejar pendiente exitosa

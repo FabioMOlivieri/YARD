@@ -15,3 +15,6 @@ ${gIdMotivoCV}  1
 ${gIdCircuitoDescargaCamionCerealTimbues}   51
 #Puestos de trabajo
 ${gWorkstationGeneralTimbues}   8
+#Sede Origen
+${gSedeCharata}     8
+${gSedeBsAs}     1
