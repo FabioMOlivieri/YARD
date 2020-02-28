@@ -3,12 +3,15 @@ Resource        ../../Libraries Proxy/Selenium Proxy.robot
 Resource        ../../User Interface/Cupo/Controles Validar Cupo.robot
 
 *** Keywords ***
-#CIRCUITO
+################# CIRCUITO ###################################
 Seleccionar Tipo Producto
     [Arguments]     ${IdTipoProducto}
     ${ddlTipoProducto}  Capturar Elemento  ${locDdlTipoProducto}
     Elegir Opcion Lista Por Valor  ${ddlTipoProducto}  ${IdTipoProducto}  
-#DOCUMENTO DE PORTE
+
+################################################################
+
+################### DOCUMENTO DE PORTE #########################
 Seleccionar Tipo Documento Porte
     [Arguments] ${IdTipoDocumentoPorte}
     ${ddlTipoDocumentoPorte}  Capturar Elemento  ${locDdlTipoDocumentoPorte}
@@ -17,7 +20,10 @@ Ingresar Numero Documento Porte
     [Arguments]    ${NumeroDocumentoPorte}
     ${txtNumeroDocumentoPorte}    Capturar Elemento   ${locTxtNumeroDocumentoPorte}
     Ingresar Texto    ${txtNumeroDocumentoPorte}    ${NumeroDocumentoPorte}
-#DATOS CUPO
+
+##############################################################
+
+##################### DATOS CUPO #############################
 Seleccionar Opcion Con Cupo
     ${optConCupo}    Capturar Elemento    ${locOptConCupo}
     Presionar Boton  ${optConCupo}
@@ -29,7 +35,10 @@ Ingresar Codigo Cupo
 Seleccionar Opcion Sin Cupo
     ${optSinCupo}    Capturar Elemento    ${locOptSinCupo}
     Presionar Boton  ${optSinCupo}
-#DATOS DOCUMENTO
+
+#################################################################
+
+################### DATOS DOCUMENTO #############################
 Ingresar Producto
     [Arguments]    ${CodigoProducto}
     ${txtProducto}    Capturar Elemento    ${locTxtProducto}
@@ -75,7 +84,10 @@ Ingresar Sede
     ${txtSedeOrigen}      Capturar Elemento  ${locTxtSedeOrigen}
     Ingresar Texto  ${txtSedeOrigen}   ${valorABuscar}
     #Press Keys  ${txtSedeOrigen}  RETURN
-#CAMPO EPA
+
+#############################################################
+
+################ CAMPO EPA ###################################
 Ingresar Titular
     [Arguments]    ${CuitTitular}
     ${txtTitular}    Capturar Elemento    ${locTxtTitular}
@@ -96,7 +108,10 @@ Ingresar Procedencia
     [Arguments]    ${Procedencia}
     ${txtProcedencia}    Capturar Elemento    ${locTxtProcedencia}
     Ingresar Texto    ${txtProcedencia}    ${Procedencia}
-#CTG
+
+#################################################################
+
+###########  CTG  ###############################################
 Ingresar CTG
     [Arguments]    ${NumeroCTG}
     ${txtCTG}    Capturar Elemento    ${locTxtCTG}
@@ -113,7 +128,6 @@ Ingresar Codigo Cancelacion CTG
     [Arguments]    ${CodigoCancelacionCTG} 
     ${txtCodigoCancelacionCTG}    Capturar Elemento    ${locTxtCodigoCancelacionCTG}
     Ingresar Texto    ${txtCodigoCancelacionCTG}    ${CodigoCancelacionCTG}
-
 Ingresar Chofer
     [Arguments]    ${documentoChofer}
     ${txtChofer}    Capturar Elemento    ${locTxtChofer}
@@ -122,17 +136,16 @@ Ingresar Chofer
 Presionar Busqueda Avanzada Chofer
     ${btnBuscarChofer}    Capturar Elemento    ${locBtnBuscarChofer}
     Presionar Boton    ${btnBuscarChofer}
-
 Seleccionar Sin Confirmacion CTG
     ${chkSinConfirmarCTG}    Capturar Elemento    ${locChkSinConfirmarCTG}
     Presionar Boton  ${optCchkSinConfirmarCTGonCupo}
-
 Ingresar KG Netos
     [Arguments]    ${KilosNeto}
     ${txtKgNeto}    Capturar Elemento    ${locTxtKgNeto}
     Ingresar Texto    ${txtKgNeto}    ${KilosNeto}
-    
-#ACCIONES
+########################################################
+
+############### ACCIONES ##############################
 Presionar Aceptar
     ${btnAceptar}    Capturar Elemento    ${locBtnAceptar}
     Presionar Boton    ${btnAceptar}
@@ -145,3 +158,4 @@ Presionar Dejar Pendiente
 Presionar Consultar datos AFIP
     ${btnConsultarDatosAFIP}    Capturar Elemento    ${locBtnConsultarDatosAFIP}
     Presionar Boton    ${btnConsultarDatosAFIP}
+#######################################################
