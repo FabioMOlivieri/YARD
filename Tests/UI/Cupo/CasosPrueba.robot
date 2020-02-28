@@ -2,6 +2,7 @@
 Test Template   Flujo
 Resource        ../../../Tasks/Cupo/Tareas Validar Cupo.robot
 Resource        ../../../Tasks/Popups generales/Tareas Asignar Tarjeta.robot
+Resource        ../../../Tasks/Cupo/Tareas Dejar Cupo Pendiente.robot
 Resource        ../../../Tasks/Login.robot
 Resource        ../../../Tasks/Menu.robot
 Resource        ../../../Global Definitions/Variables.robot
@@ -18,20 +19,18 @@ ${FilePathExcel}    ../../../External Resources/UI/Cupo/CasosPruebaValidarCupo.x
 ${HojaExcel}      Datos
 
 ***Test Cases***     
-CasosPrueba   ${TipoFlujo}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${ConWSAfip}    ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}     ${ConTarjeta}     ${NroTarjeta}   ${ValFront}   ${Msj} 
+CasosPrueba   ${TipoFlujo}  ${Accion}   ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${ConWSAfip}    ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}     ${ConTarjeta}     ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend} 
 
 **Keywords
 Flujo
-    [Arguments]     ${TipoFlujo}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${ConWSAfip}    ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}                
-    Setear Caracteristicas  ${ConWSAfip}    ${ConTarjeta}
+    [Arguments]     ${TipoFlujo}    ${Accion}   ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${ConWSAfip}    ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend}
+    Run Keyword If  '${Accion}'=='ACEPTA'   Setear Caracteristicas  ${ConWSAfip}    ${ConTarjeta}
     Tareas Validar Cupo.Ingresa Carta de porte  ${NroDocPorte}
     Run Keyword If  ${ConCupo}==False  Ingresar Datos Documento     ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}   ${SedeOrigen} 
     Run Keyword If  ${ConCupo}==True  Ingresar Cupo     ${NroCupo}
     Tareas Validar Cupo.Ingresa Datos CTG   ${CTG}   ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
-    Run Keyword If  ${ConWSAfip}==False  Aceptar Sin WS Afip    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
-    Run Keyword If  ${ConWSAfip}==True  Aceptar Con WS Afip     ${TipoFlujo}    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
-    Run Keyword If  '${TipoFlujo}'=='OK'    Verificar movimiento OK     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}
-    Run Keyword If  '${TipoFlujo}'=='ERROR'     Verificar Movimiento con Error    ${Msj} 
+    Run Keyword If  '${Accion}'=='ACEPTA'  Aceptar Movimiento  ${TipoFlujo}    ${ConWSAfip}    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}   ${ConCupo}  ${NroCupo}  ${Msj}
+    Run Keyword If  '${Accion}'=='PENDIENTE'  Dejar Movimiento Pendiente    ${TipoFlujo}    ${MotivoPend}   ${ObsPend}  ${Msj}  ${NroDocPorte}
 
 Iniciar Suite
     Iniciar Aplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}
@@ -59,6 +58,13 @@ Ingresar Cupo
     [Arguments]     ${NroCupo}
     Tareas Validar Cupo.Selecciona Ingreso con Cupo
     Tareas Validar Cupo.Ingresa Cupo  ${NroCupo}
+
+Aceptar Movimiento
+    [Arguments]     ${TipoFlujo}    ${ConWSAfip}    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}   ${ConCupo}  ${NroCupo}  ${Msj}     
+    Run Keyword If  ${ConWSAfip}==False  Aceptar Sin WS Afip    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
+    Run Keyword If  ${ConWSAfip}==True  Aceptar Con WS Afip     ${TipoFlujo}    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
+    Run Keyword If  '${TipoFlujo}'=='OK'    Verificar movimiento OK     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}
+    Run Keyword If  '${TipoFlujo}'=='ERROR'     Verificar Movimiento con Error    ${Msj} 
 
 Aceptar Sin WS Afip
     [Arguments]     ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
@@ -97,3 +103,24 @@ Verificar Movimiento con Error
     [Arguments]     ${Msj}
     Page Should Contain     ${Msj}
     Run Keyword And Ignore Error  Asignar Tarjeta.Cancela Asignación Tarjeta
+
+Dejar Movimiento Pendiente
+    [Arguments]     ${TipoFlujo}    ${MotivoPend}   ${ObsPend}  ${Msj}  ${NroDocPorte}
+    Tareas Validar Cupo.Decide dejar pendiente el Cupo
+    Run Keyword If  '${TipoFlujo}'=='OK'  Dejar Movimiento Pendiente OK    ${MotivoPend}   ${ObsPend}  ${Msj}  ${NroDocPorte}
+    Run Keyword If  '${TipoFlujo}'=='ERROR'     Verificar Movimiento Pendiente con Error    ${Msj}
+
+Dejar Movimiento Pendiente OK
+    [Arguments]     ${MotivoPend}   ${ObsPend}  ${Msj}  ${NroDocPorte}
+    Tareas Dejar Cupo Pendiente.Acepta dejar pendiente el cupo    ${MotivoPend}   ${ObsPend}
+    Verificar movimiento Pendiente OK     ${Msj}  ${NroDocPorte}
+
+Verificar Movimiento Pendiente con Error
+    [Arguments]     ${Msj}
+    Page Should Contain     ${Msj}
+
+Verificar movimiento Pendiente OK
+    [Arguments]     ${Msj}  ${NroDocPorte}  
+    Page Should Contain     ${Msj}
+    Evaluaciones Validar Cupo.Sistema debe guardar el movimiento Pendiente Cupo     ${NroDocPorte}
+    Evaluaciones Validar Cupo.Sistema debe volver al estado inicial de la pantalla

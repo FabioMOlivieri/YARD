@@ -31,7 +31,7 @@ Ingresa Datos Documento
     Run Keyword If  '${aCuilDestinatario}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Destinatario   ${aCuilDestinatario}
     Run Keyword If  '${aIdFinalidad}' is not '${Empty}'  Acciones Validar Cupo.Seleccionar Finalidad   ${aIdFinalidad}
     Run Keyword If  '${aIdFinalidad}' is not '${Empty}' and '${aIdMotivo}' is not '${Empty}'  Acciones Validar Cupo.Seleccionar Motivo Cupo     ${aIdMotivo}
-    Run Keyword If  ${aCuilVendedor} == ${gCuilLDC} and '${aIdSede}' is not '${Empty}'  Acciones Validar Cupo.Ingresar Sede  ${aIdSede}
+    Run Keyword If  '${aCuilVendedor}' is not '${Empty}' and '${aIdSede}' is not '${Empty}' and '${aCuilVendedor}' == '${gCuilLDC}'  Acciones Validar Cupo.Ingresar Sede  ${aIdSede}
 
 Ingresa Datos CTG
     [Arguments]     ${aCTG}     ${aCuilTransportista}   ${aCuilChofer}  ${aKgNetos}
