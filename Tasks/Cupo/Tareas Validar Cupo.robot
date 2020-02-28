@@ -66,3 +66,13 @@ Habilita Accion WS Afip
     [Arguments]     ${IdPuestoTrabajo}
     ${UpdateOutput}=    Execute Sql String    UPDATE T_WORKSTATION_ACTION_MODE SET IS_AUTOMATIC = 1 WHERE ID_WORKSTATION = ${IdPuestoTrabajo} AND ID_ACTION = 7;
     Should Be Equal As Strings    ${UpdateOutput}    None
+
+Deshabilita Accion Uso Tarjeta
+    [Arguments]     ${IdPuestoTrabajo}
+    ${UpdateOutput}=    Execute Sql String    UPDATE T_WORKSTATION_ACTION_MODE SET IS_ENABLED = 0 WHERE ID_WORKSTATION = ${IdPuestoTrabajo} and ID_ACTION = 6;
+    Should Be Equal As Strings    ${UpdateOutput}    None
+
+Habilita Accion Uso Tarjeta
+    [Arguments]     ${IdPuestoTrabajo}
+    ${UpdateOutput}=    Execute Sql String    UPDATE T_WORKSTATION_ACTION_MODE SET IS_ENABLED = 1 WHERE ID_WORKSTATION = ${IdPuestoTrabajo} and ID_ACTION = 6;
+    Should Be Equal As Strings    ${UpdateOutput}    None

@@ -18,20 +18,20 @@ ${FilePathExcel}    ../../../External Resources/UI/Cupo/CasosPruebaValidarCupo.x
 ${HojaExcel}      Datos
 
 ***Test Cases***     
-CasosPrueba   ${TipoFlujo}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${ConWSAfip}    ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${NroTarjeta}   ${ValFront}   ${Msj} 
+CasosPrueba   ${TipoFlujo}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${ConWSAfip}    ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}     ${ConTarjeta}     ${NroTarjeta}   ${ValFront}   ${Msj} 
 
 **Keywords
 Flujo
-    [Arguments]     ${TipoFlujo}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${ConWSAfip}    ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${NroTarjeta}   ${ValFront}   ${Msj}                
-    Setear WS Afip  ${ConWSAfip}
+    [Arguments]     ${TipoFlujo}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${ConWSAfip}    ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}                
+    Setear Caracteristicas  ${ConWSAfip}    ${ConTarjeta}
     Tareas Validar Cupo.Ingresa Carta de porte  ${NroDocPorte}
     Run Keyword If  ${ConCupo}==False  Ingresar Datos Documento     ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}   ${SedeOrigen} 
     Run Keyword If  ${ConCupo}==True  Ingresar Cupo     ${NroCupo}
     Tareas Validar Cupo.Ingresa Datos CTG   ${CTG}   ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
-    Run Keyword If  ${ConWSAfip}==False  Aceptar Sin WS Afip    ${NroTarjeta}   ${CodCancCTG}
-    Run Keyword If  ${ConWSAfip}==True  Aceptar Con WS Afip     ${NroTarjeta}   ${CodCancCTG}
-    Run Keyword If  '${ConWSAfip}'=='OK'    Verificar movimiento OK     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}
-    Run Keyword If  '${ConWSAfip}'=='ERROR'     Verificar Movimiento con Error    ${Msj} 
+    Run Keyword If  ${ConWSAfip}==False  Aceptar Sin WS Afip    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
+    Run Keyword If  ${ConWSAfip}==True  Aceptar Con WS Afip     ${TipoFlujo}    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
+    Run Keyword If  '${TipoFlujo}'=='OK'    Verificar movimiento OK     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}
+    Run Keyword If  '${TipoFlujo}'=='ERROR'     Verificar Movimiento con Error    ${Msj} 
 
 Iniciar Suite
     Iniciar Aplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}
@@ -42,10 +42,12 @@ Cerrar Suite
     Cerrar Pantalla
     Disconnect From Database
 
-Setear WS Afip
-    [Arguments]     ${ConWSAfip}
+Setear Caracteristicas
+    [Arguments]     ${ConWSAfip}    ${ConTarjeta}
     Run Keyword If  ${ConWSAfip}==False  Tareas Validar Cupo.Deshabilita Accion WS Afip     ${gWorkstationGeneralTimbues}
     Run Keyword If  ${ConWSAfip}==True  Tareas Validar Cupo.Habilita Accion WS Afip     ${gWorkstationGeneralTimbues}
+    Run Keyword If  ${ConTarjeta}==False  Tareas Validar Cupo.Deshabilita Accion Uso Tarjeta  ${gWorkstationGeneralTimbues}
+    Run Keyword If  ${ConTarjeta}==True  Tareas Validar Cupo.Habilita Accion Uso Tarjeta  ${gWorkstationGeneralTimbues}
     Refrescar pagina
 
 Ingresar Datos Documento
@@ -59,18 +61,30 @@ Ingresar Cupo
     Tareas Validar Cupo.Ingresa Cupo  ${NroCupo}
 
 Aceptar Sin WS Afip
-    [Arguments]     ${NroTarjeta}   ${CodCancCTG}
+    [Arguments]     ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
     Tareas Validar Cupo.Ingresa codigo cancelacion CTG  ${CodCancCTG}  
     Tareas Validar Cupo.Decide aceptar
-    Tareas Asignar Tarjeta.Asigna Tarjeta  ${NroTarjeta}
+    Run Keyword If  ${ConTarjeta}==True  Tareas Asignar Tarjeta.Asigna Tarjeta  ${NroTarjeta}
 
 Aceptar Con WS Afip
-    [Arguments]     ${NroTarjeta}   ${CodCancCTG}   
+    [Arguments]     ${TipoFlujo}    ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}   
+    Run Keyword If  '${TipoFlujo}'=='OK'  Aceptar Flujo OK y Con WS AFIP  ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
+    Run Keyword If  '${TipoFlujo}'=='ERROR'  Aceptar Flujo con Eror y Con WS AFIP  ${ConTarjeta}   ${NroTarjeta}
+
+Aceptar Flujo con Eror y Con WS AFIP
+    [Arguments]     ${ConTarjeta}   ${NroTarjeta}
     Tareas Validar Cupo.Decide aceptar
-    Tareas Asignar Tarjeta.Asigna Tarjeta  ${NroTarjeta}
+    Run Keyword If  ${ConTarjeta}==True     Tareas Asignar Tarjeta.Asigna Tarjeta  ${NroTarjeta}
     Sleep   2
-    Tareas Validar Cupo.Ingresa codigo cancelacion CTG  ${CodCancCTG}
+
+Aceptar Flujo OK y Con WS AFIP
+    [Arguments]     ${ConTarjeta}   ${NroTarjeta}   ${CodCancCTG}
     Tareas Validar Cupo.Decide aceptar
+    Run Keyword If  ${ConTarjeta}==True     Tareas Asignar Tarjeta.Asigna Tarjeta  ${NroTarjeta}
+    Sleep   2
+    ${ServicioAFIPOK}=  Run Keyword And Return Status  Page Should Contain  El servicio de AFIP No se encuentra Disponible
+    Run Keyword If  ${ServicioAFIPOK}     Tareas Validar Cupo.Ingresa codigo cancelacion CTG  ${CodCancCTG}
+    Run Keyword If  ${ServicioAFIPOK}     Tareas Validar Cupo.Decide aceptar
 
 Verificar movimiento OK
     [Arguments]     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}    
