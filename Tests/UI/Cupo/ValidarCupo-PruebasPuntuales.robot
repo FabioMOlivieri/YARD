@@ -49,7 +49,7 @@ UsabilidadRecuperarDatoCupoAnterior
     [Teardown]  Disconnect From Database
     GIVEN Tareas Validar Cupo.Ingresa Carta de porte     123412345678
         AND Tareas Validar Cupo.Selecciona Ingreso con Cupo
-    WHEN Tareas Validar Cupo.Ingresa Cupo  TMB-SOJ-20191022-2985
+    WHEN Tareas Validar Cupo.Ingresa Cupo  TMB-SOJ-20191123-8417
     THEN Evaluaciones Validar Cupo.Sistema debe recuperar datos del cupo ingresado     TMB-SOJ-20191022-2985
         AND Evaluaciones Validar Cupo.Sistema debe informar cupo anterior o posterior
         AND Evaluaciones Validar Cupo.Sistema debe marcar el ingreso sin cupo

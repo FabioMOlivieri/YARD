@@ -18,3 +18,6 @@ ${gWorkstationGeneralTimbues}   8
 #Sede Origen
 ${gSedeCharata}     8
 ${gSedeBsAs}     1
+#Estados Movimiento
+${gEstadoAptoControlEntrada}    10
+${gEstadoPendienteCupo}     22

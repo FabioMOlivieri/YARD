@@ -7,6 +7,7 @@ Resource        ../../../Tasks/Login.robot
 Resource        ../../../Tasks/Menu.robot
 Resource        ../../../Global Definitions/Variables.robot
 Resource        ../../../Global Definitions/Constantes.robot
+Resource        ../../../Global Definitions/Mensajes.robot
 Resource        ../../../Questions/Cupo/Evaluaciones Validar Cupo.robot
 Resource        ../../../Libraries Proxy/Selenium Proxy.robot
 Suite Setup     Iniciar Suite
@@ -58,7 +59,7 @@ FlujoAceptarOKConWsAfip
     Tareas Validar Cupo.Decide aceptar
     Run Keyword If  ${ConTarjeta}==True     Tareas Asignar Tarjeta.Asigna Tarjeta  ${NroTarjeta}
     Sleep   2
-    ${ServicioAFIPOK}=  Run Keyword And Return Status  Page Should Contain  El servicio de AFIP No se encuentra Disponible
+    ${ServicioAFIPOK}=  Run Keyword And Return Status  Page Should Contain  ${MsjServicioAFIPNoDisponible}
     Run Keyword If  ${ServicioAFIPOK}     Tareas Validar Cupo.Ingresa codigo cancelacion CTG  ${CodCancCTG}
     Run Keyword If  ${ServicioAFIPOK}     Tareas Validar Cupo.Decide aceptar
     Verificar movimiento OK     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}

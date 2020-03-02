@@ -1,38 +1,9 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
 Resource        ../../User Interface/Cupo/Controles Validar Cupo.robot
+Resource        ../../Global Definitions/Mensajes.robot
+Resource        ../../Global Definitions/Constantes.robot
 Library         Collections
-
-**Variables
-
-########################## TESTS PRUEBAS PUNTUALES #################################
-
-${QueryValidarCupo}     SELECT P.ALIAS, SS.FISCAL_CODE, SB.FISCAL_CODE, SC.FISCAL_CODE, QC.ID_PURPOSE, QC.ID_QUOTA_REASON 
-...     FROM T_QUOTA_DET_CODE QC INNER JOIN T_PRODUCT P ON P.ID_PRODUCT = QC.ID_PRODUCT 
-...     INNER JOIN T_SOCIETY SS ON SS.ID_SOCIETY = QC.ID_SELLER 
-...     LEFT JOIN T_SOCIETY SB ON SB.ID_SOCIETY = QC.ID_BROKER 
-...     INNER JOIN T_SOCIETY SC ON SC.ID_SOCIETY = QC.ID_CONSIGNEE 
-...     WHERE QUOTA_CODE =
-
-${QueryValidarFinalidades}      SELECT NAME_PURPOSE FROM T_PURPOSE P
-...     INNER JOIN T_CIRCUIT_PURPOSE CP ON P.ID_PURPOSE = CP.ID_PURPOSE
-...     WHERE P.ACTIVE = 1 AND CP.ID_CIRCUIT =  
-
-#####################################################################################
-
-##########################  TESTS FLUJOS ############################################
-
-${QueryValidarMovimientoGuardado}   SELECT M.* 
-...     FROM T_MOVEMENT M
-...     INNER JOIN T_CARD C ON M.ID_CARD = C.ID_CARD
-...     WHERE M.ID_MOVEMENT_STATUS = 10 AND C.NUMBER =
-${QueryValidarMovimientoPendienteCupo}  select * 
-...     FROM T_MOVEMENT 
-...     WHERE CONVERT(date,ENTRY_DATE) = CONVERT(date,GETDATE()) 
-...         AND ID_MOVEMENT_STATUS = 22 AND ID_CIRCUIT = 51 
-...         AND CARRIAGE_DOCUMENT_NUMBER = 
-
-#####################################################################################
 
 **Keywords
 
@@ -88,7 +59,12 @@ Sistema debe recuperar datos del cupo ingresado
     ${Destinatario}=    Get Value  ${locTxtDestinatario}
     ${Finalidad}=   Get Value  ${locDdlFinalidad}
     ${MovitoCupo}=  Get Value  ${locDdlMotivoCupo}
-    ${Query}    Set Variable  ${QueryValidarCupo} '${aCupo}'  
+     ${Query}=   Catenate  SELECT P.ALIAS, SS.FISCAL_CODE, SB.FISCAL_CODE, SC.FISCAL_CODE, QC.ID_PURPOSE, QC.ID_QUOTA_REASON
+        ...     FROM T_QUOTA_DET_CODE QC INNER JOIN T_PRODUCT P ON P.ID_PRODUCT = QC.ID_PRODUCT
+        ...     INNER JOIN T_SOCIETY SS ON SS.ID_SOCIETY = QC.ID_SELLER
+        ...     LEFT JOIN T_SOCIETY SB ON SB.ID_SOCIETY = QC.ID_BROKER 
+        ...     INNER JOIN T_SOCIETY SC ON SC.ID_SOCIETY = QC.ID_CONSIGNEE 
+        ...     WHERE QUOTA_CODE = '${aCupo}'
     ${ResultadoQuery}   Query   ${Query}
     Should Be Equal As Integers  ${Producto}    ${ResultadoQuery[0][0]}
     Run Keyword If  ${ResultadoQuery[0][1]} is not None  Should Be Equal  ${Vendedor}    ${ResultadoQuery[0][1]}
@@ -97,11 +73,11 @@ Sistema debe recuperar datos del cupo ingresado
     Should Be Equal As Integers  ${Finalidad}   ${ResultadoQuery[0][4]}
     Should Be Equal As Integers  ${MovitoCupo}      ${ResultadoQuery[0][5]}
 Sistema debe informar cupo anterior o posterior
-    Page Should Contain  La fecha del Cupo es anterior o posterior a la permitida 
+    Page Should Contain  ${MsjCupoAnteriorOPosterior} 
 Sistema debe marcar el ingreso sin cupo
     Checkbox Should Be Selected  ${locChkSinCupo}
 Sistema debe informar que el cupo ya fue utilizado
-    Page Should Contain  El Cupo ingresado ya fue utilizado
+    Page Should Contain  ${MsjCupoUtilizado}
     Element Should Be Disabled  ${locBtnAceptar}
 Sistema debe visualizar descripcion del producto seleccionado
     [Arguments]     ${CodigoProducto}
@@ -110,7 +86,9 @@ Sistema debe visualizar descripcion del producto seleccionado
 Sistema debe visualizar todas las finalidades activas
     [Arguments]     ${aIdCircuito}
     ${lista}     Get List Items  ${locDdlFinalidad}
-    ${Consulta}     Set Variable  ${QueryValidarFinalidades} ${aIdCircuito}
+    ${Consulta}=    Catenate  SELECT NAME_PURPOSE FROM T_PURPOSE P
+        ...     INNER JOIN T_CIRCUIT_PURPOSE CP ON P.ID_PURPOSE = CP.ID_PURPOSE
+        ...     WHERE P.ACTIVE = 1 AND CP.ID_CIRCUIT = ${aIdCircuito}
     ${ResultadoConsulta}=   Query  ${Consulta}
     ${cantFilas}=   Get Length  ${ResultadoConsulta}
     FOR     ${i}    IN RANGE    1   ${cantFilas}
@@ -157,19 +135,21 @@ Sistema debe volver al estado inicial de la pantalla
     Element Should Be Focused  ${locTxtNumeroDocumentoPorte}
 Sistema debe guardar el movimiento Pendiente Control
     [Arguments]     ${Tarjeta}
-    ${Consulta}     Set Variable  ${QueryValidarMovimientoGuardado} '${Tarjeta}'
+    ${Consulta}=    Catenate  SELECT M.* 
+        ...     FROM T_MOVEMENT M
+        ...     INNER JOIN T_CARD C ON M.ID_CARD = C.ID_CARD
+        ...     WHERE M.ID_MOVEMENT_STATUS = ${gEstadoAptoControlEntrada} AND C.NUMBER = '${Tarjeta}'
     Check If Exists In Database    ${Consulta}
 Sistema debe marcar el cupo utilizado como Sin Cupo 
     [Arguments]     ${Cupo}
     Check If Exists In Database  SELECT * FROM T_QUOTA_DET_CODE WHERE QUOTA_CODE = '${Cupo}'
 Sistema debe guardar el movimiento Pendiente Cupo
     [Arguments]     ${NroDocPorte}
-    ${Consulta}     Set Variable  ${QueryValidarMovimientoPendienteCupo} '${NroDocPorte}'
+    ${Consulta}=    Catenate  SELECT * 
+        ...     FROM T_MOVEMENT 
+        ...     WHERE CONVERT(date,ENTRY_DATE) = CONVERT(date,GETDATE()) 
+        ...         AND ID_MOVEMENT_STATUS = ${gEstadoPendienteCupo} AND ID_CIRCUIT = ${gIdCircuitoDescargaCamionCerealTimbues} 
+        ...         AND CARRIAGE_DOCUMENT_NUMBER = '${NroDocPorte}'
     Check If Exists In Database    ${Consulta}
 
 ###############################################################################
-
-
-
-
-
