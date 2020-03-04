@@ -1,10 +1,10 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Cupo/Controles Validar Cupo.robot
+Resource        ../../User Interface/Cupo/ControlesValidarCupo.robot
 
 *** Keywords ***
 ################# CIRCUITO ###################################
-Seleccionar Tipo Producto
+SeleccionarTipoProducto
     [Arguments]     ${IdTipoProducto}
     ${ddlTipoProducto}  Capturar Elemento  ${locDdlTipoProducto}
     Elegir Opcion Lista Por Valor  ${ddlTipoProducto}  ${IdTipoProducto}  
@@ -12,11 +12,11 @@ Seleccionar Tipo Producto
 ################################################################
 
 ################### DOCUMENTO DE PORTE #########################
-Seleccionar Tipo Documento Porte
+SeleccionarTipoDocumentoPorte
     [Arguments] ${IdTipoDocumentoPorte}
     ${ddlTipoDocumentoPorte}  Capturar Elemento  ${locDdlTipoDocumentoPorte}
     Elegir Opcion Lista Por Valor  ${ddlTipoDocumentoPorte}  ${IdTipoDocumentoPorte} 
-Ingresar Numero Documento Porte
+IngresarNumeroDocumentoPorte
     [Arguments]    ${NumeroDocumentoPorte}
     ${txtNumeroDocumentoPorte}    Capturar Elemento   ${locTxtNumeroDocumentoPorte}
     Ingresar Texto    ${txtNumeroDocumentoPorte}    ${NumeroDocumentoPorte}
@@ -24,87 +24,87 @@ Ingresar Numero Documento Porte
 ##############################################################
 
 ##################### DATOS CUPO #############################
-Seleccionar Opcion Con Cupo
+SeleccionarOpcionConCupo
     ${optConCupo}    Capturar Elemento    ${locOptConCupo}
     Presionar Boton  ${optConCupo}
-Ingresar Codigo Cupo
+IngresarCodigoCupo
     [Arguments]    ${NumeroCupo}
     ${txtCodigoCupo}    Capturar Elemento    ${locTxtCodigoCupo}
     Ingresar Texto    ${txtCodigoCupo}    ${NumeroCupo}
     Press Keys  ${txtCodigoCupo}  TAB
-Seleccionar Opcion Sin Cupo
+SeleccionarOpcionSinCupo
     ${optSinCupo}    Capturar Elemento    ${locOptSinCupo}
     Presionar Boton  ${optSinCupo}
 
 #################################################################
 
 ################### DATOS DOCUMENTO #############################
-Ingresar Producto
+IngresarProducto
     [Arguments]    ${CodigoProducto}
     ${txtProducto}    Capturar Elemento    ${locTxtProducto}
     Ingresar Texto    ${txtProducto}    ${CodigoProducto}
     Press Keys  ${locTxtProducto}  TAB
-Presionar Busqueda Avanzada Producto
+PresionarBusquedaAvanzadaProducto
     ${btnBuscarProducto}    Capturar Elemento    ${locBtnBuscarProducto}
     Presionar Boton    ${btnBuscarProducto}
-Ingresar Vendedor
+IngresarVendedor
     [Arguments]    ${CuitVendedor}
     ${txtVendedor}    Capturar Elemento    ${locTxtVendedor}
     Ingresar Texto    ${txtVendedor}    ${CuitVendedor}
     Press Keys  ${txtVendedor}  TAB
-Presionar Busqueda Avanzada Vendedor
+PresionarBusquedaAvanzadaVendedor
     ${btnBuscarVendedor}    Capturar Elemento    ${locBtnBuscarVendedor}
     Presionar Boton    ${btnBuscarVendedor}
-Ingresar Corredor
+IngresarCorredor
     [Arguments]    ${CuitCorredor}
     ${txtCorredor}    Capturar Elemento    ${locTxtCorredor}
     Ingresar Texto    ${txtCorredor}    ${CuitCorredor}
     Press Keys  ${txtCorredor}  TAB
-Presionar Busqueda Avanzada Corredor
+PresionarBusquedaAvanzadaCorredor
     ${btnBuscarCorredor}    Capturar Elemento    ${locBtnBuscarCorredor}
     Presionar Boton    ${btnBuscarCorredor}
-Ingresar Destinatario
+IngresarDestinatario
     [Arguments]    ${CuitDestinatario}
     ${txtDestinatario}    Capturar Elemento    ${locTxtDestinatario}
     Ingresar Texto    ${txtDestinatario}    ${CuitDestinatario}
     Press Keys  ${txtDestinatario}  TAB
-Presionar Busqueda Avanzada Destinatario
+PresionarBusquedaAvanzadaDestinatario
     ${btnDestinatario}    Capturar Elemento    ${locBtnDestinatario}
     Presionar Boton    ${btnDestinatario}
-Seleccionar Finalidad
+SeleccionarFinalidad
     [Arguments]     ${IdFinalida}
     ${ddlFinalidad}  Capturar Elemento  ${locDdlFinalidad}
     Elegir Opcion Lista Por Valor  ${ddlFinalidad}  ${IdFinalida} 
-Seleccionar Motivo Cupo
+SeleccionarMotivoCupo
     [Arguments]     ${IdMotivoCupo}
     ${ddlMotivoCupo}  Capturar Elemento  ${locDdlMotivoCupo}
     Elegir Opcion Lista Por Valor  ${ddlMotivoCupo}  ${IdMotivoCupo} 
-Ingresar Sede
-    [Arguments]     ${valorABuscar}
+IngresarSede
+    [Arguments]     ${ValorABuscar}
     ${txtSedeOrigen}      Capturar Elemento  ${locTxtSedeOrigen}
-    Ingresar Texto  ${txtSedeOrigen}   ${valorABuscar}
+    Ingresar Texto  ${txtSedeOrigen}   ${ValorABuscar}
     #Press Keys  ${txtSedeOrigen}  RETURN
 
 #############################################################
 
 ################ CAMPO EPA ###################################
-Ingresar Titular
+IngresarTitular
     [Arguments]    ${CuitTitular}
     ${txtTitular}    Capturar Elemento    ${locTxtTitular}
     Ingresar Texto    ${txtTitular}    ${CuitTitular}
     Press Keys  ${txtTitular}  TAB
-Presionar Busqueda Avanzada Titular
+PresionarBusquedaAvanzadaTitular
     ${btnBuscarTitular}    Capturar Elemento    ${locBtnBuscarTitular}
     Presionar Boton    ${btnBuscarTitular}
-Seleccionar Campo EPA
+SeleccionarCampoEPA
     [Arguments] ${IdCampoEPA}
     ${ddlCampoEPA}  Capturar Elemento  ${locDdlCampoEPA}
     Elegir Opcion Lista Por Valor  ${ddlCampoEPA}  ${IdCampoEPA} 
-Seleccionar Cosecha
+SeleccionarCosecha
     [Arguments] ${IdCosecha}
     ${ddlCosecha}  Capturar Elemento  ${locDdlCosecha}
     Elegir Opcion Lista Por Valor  ${ddlCosecha}  ${IdCosecha} 
-Ingresar Procedencia
+IngresarProcedencia
     [Arguments]    ${Procedencia}
     ${txtProcedencia}    Capturar Elemento    ${locTxtProcedencia}
     Ingresar Texto    ${txtProcedencia}    ${Procedencia}
@@ -112,50 +112,50 @@ Ingresar Procedencia
 #################################################################
 
 ###########  CTG  ###############################################
-Ingresar CTG
+IngresarCTG
     [Arguments]    ${NumeroCTG}
     ${txtCTG}    Capturar Elemento    ${locTxtCTG}
     Ingresar Texto    ${txtCTG}    ${NumeroCTG}
-Ingresar Transportista
+IngresarTransportista
     [Arguments]    ${CuitTransportista}
     ${txtTransportista}    Capturar Elemento    ${locTxtTransportista}
     Ingresar Texto    ${txtTransportista}    ${CuitTransportista}
     Press Keys  ${txtTransportista}  TAB
-Presionar Busqueda Avanzada Transportista
+PresionarBusquedaAvanzadaTransportista
     ${btnBuscarTransportista}    Capturar Elemento    ${locBtnBuscarTransportista}
     Presionar Boton    ${btnBuscarTransportista}
-Ingresar Codigo Cancelacion CTG
+IngresarCodigoCancelacionCTG
     [Arguments]    ${CodigoCancelacionCTG} 
     ${txtCodigoCancelacionCTG}    Capturar Elemento    ${locTxtCodigoCancelacionCTG}
     Ingresar Texto    ${txtCodigoCancelacionCTG}    ${CodigoCancelacionCTG}
-Ingresar Chofer
-    [Arguments]    ${documentoChofer}
+IngresarChofer
+    [Arguments]    ${DocumentoChofer}
     ${txtChofer}    Capturar Elemento    ${locTxtChofer}
-    Ingresar Texto    ${txtChofer}    ${documentoChofer}
+    Ingresar Texto    ${txtChofer}    ${DocumentoChofer}
     Press Keys  ${txtChofer}  TAB
-Presionar Busqueda Avanzada Chofer
+PresionarBusquedaAvanzadaChofer
     ${btnBuscarChofer}    Capturar Elemento    ${locBtnBuscarChofer}
     Presionar Boton    ${btnBuscarChofer}
-Seleccionar Sin Confirmacion CTG
+SeleccionarSinConfirmacionCTG
     ${chkSinConfirmarCTG}    Capturar Elemento    ${locChkSinConfirmarCTG}
     Presionar Boton  ${optCchkSinConfirmarCTGonCupo}
-Ingresar KG Netos
+IngresarKGNetos
     [Arguments]    ${KilosNeto}
     ${txtKgNeto}    Capturar Elemento    ${locTxtKgNeto}
     Ingresar Texto    ${txtKgNeto}    ${KilosNeto}
 ########################################################
 
 ############### ACCIONES ##############################
-Presionar Aceptar
+PresionarAceptar
     ${btnAceptar}    Capturar Elemento    ${locBtnAceptar}
     Presionar Boton    ${btnAceptar}
-Presionar Cancelar
+PresionarCancelar
     ${btnCancelar}    Capturar Elemento    ${locBtnCancelar}
     Presionar Boton    ${btnCancelar}
-Presionar Dejar Pendiente
+PresionarDejarPendiente
     ${btnDejarPendiente}    Capturar Elemento    ${locBtnDejarPendiente}
     Presionar Boton    ${btnDejarPendiente}
-Presionar Consultar datos AFIP
+PresionarConsultarDatosAFIP
     ${btnConsultarDatosAFIP}    Capturar Elemento    ${locBtnConsultarDatosAFIP}
     Presionar Boton    ${btnConsultarDatosAFIP}
 #######################################################

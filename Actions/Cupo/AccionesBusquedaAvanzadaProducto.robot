@@ -1,30 +1,30 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Cupo/Controles Busqueda Avanzada Producto.robot
+Resource        ../../User Interface/Cupo/ControlesBusquedaAvanzadaProducto.robot
 
 *** Keywords ***
-Ingresar Codigo Producto
+IngresarCodigoProducto
     [Arguments]    ${CodigoProducto}
     ${txtCodigoProducto}    Capturar Elemento    ${locTxtCodigoProducto}
     Ingresar Texto    ${txtCodigoProducto}    ${CodigoProducto}
 
-Ingresar Descripcion Producto
+IngresarDescripcionProducto
     [Arguments]    ${DescripcionProducto}
     ${txtDescripcionProducto}    Capturar Elemento    ${locTxtDescripcionProducto}
     Ingresar Texto    ${txtDescripcionProducto}    ${DescripcionProducto}
 
-Presionar Buscar
+PresionarBuscar
     ${btnBuscar}    Capturar Elemento  ${locBtnBuscar}
     Presionar Boton  ${btnBuscar}
 
-Seleccionar primer registro
+SeleccionarPrimerRegistro
     ${chkSeleccion}    Capturar Elemento  ${locPrimerCheck}
     Presionar Boton  ${chkSeleccion}
 
-Presionar Aceptar
+PresionarAceptar
     ${btnAceptar}    Capturar Elemento  ${locBtnAceptarBusqueda}
     Presionar Boton  ${btnAceptar}
 
-Presionar Cancelar
+PresionarCancelar
     ${btnCancelar}    Capturar Elemento  ${locBtnCancelarBusqueda}
     Presionar Boton  ${btnCancelar}

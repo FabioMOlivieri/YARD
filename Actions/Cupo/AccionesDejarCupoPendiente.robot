@@ -1,22 +1,22 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Cupo/Controles Dejar Cupo Pendiente.robot
+Resource        ../../User Interface/Cupo/ControlesDejarCupoPendiente.robot
 
 *** Keywords ***
-Ingresar Observacion
+IngresarObservacion
     [Arguments]    ${Observacion}
     ${txtObservacion}    Capturar Elemento    ${locTxtObservacion}
     Ingresar Texto    ${txtObservacion}    ${Observacion}
 
-Seleccionar Motivo
+SeleccionarMotivo
     [Arguments]     ${IdMotivo}
     ${ddlMotivo}    Capturar Elemento   ${locDdlMotivo}
     Elegir Opcion Lista Por Valor  ${ddlMotivo}   ${IdMotivo}
 
-Presionar Aceptar
+PresionarAceptar
     ${btnAceptar}   Capturar Elemento   ${locBtnAceptarPendiente}
     Presionar Boton  ${btnAceptar}
 
-Presionar Cancelar
+PresionarCancelar
     ${btnCancelar}   Capturar Elemento   ${locBtnCancelarPendiente}
     Presionar Boton  ${btnCancelar}

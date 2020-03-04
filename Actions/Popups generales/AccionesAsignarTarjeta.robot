@@ -1,15 +1,15 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Popups generales/Controles Asignar Tarjeta.robot
+Resource        ../../User Interface/Popups generales/ControlesAsignarTarjeta.robot
 
 *** Keywords ***
-Ingresar Numero Tarjeta
+IngresarNumeroTarjeta
     [Arguments]    ${NumeroTarjeta}
     ${txtTarjeta}    Capturar Elemento    ${locTxtTarjeta}
     Ingresar Texto    ${txtTarjeta}    ${NumeroTarjeta}
-Presionar Aceptar
+PresionarAceptar
     ${btnAceptar}    Capturar Elemento    ${locBtnAceptarModal}
     Presionar Boton    ${btnAceptar}
-Presionar Cancelar
+PresionarCancelar
     ${btnCancelar}    Capturar Elemento    ${locBtnCancelarModal}
     Presionar Boton    ${btnCancelar}

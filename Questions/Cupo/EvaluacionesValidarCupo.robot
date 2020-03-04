@@ -1,6 +1,6 @@
 *** Settings ***
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
-Resource        ../../User Interface/Cupo/Controles Validar Cupo.robot
+Resource        ../../User Interface/Cupo/ControlesValidarCupo.robot
 Resource        ../../Global Definitions/Mensajes.robot
 Resource        ../../Global Definitions/Constantes.robot
 Library         Collections
@@ -9,14 +9,14 @@ Library         Collections
 
 #################### TESTS PRUEBAS PUNTUALES ########################
 
-Tipo de producto debe ser ${aTipoProducto}
-    Element Should Contain  ${locDdlTipoProducto}   ${aTipoProducto}   
-Tipo documento porte debe ser ${aTipoDocumento} y estar deshabilitado
-    Element Should Contain  ${locDdlTipoDocumentoPorte}  ${aTipoDocumento}
+TipoProductoDebeSer ${TipoProducto}
+    Element Should Contain  ${locDdlTipoProducto}   ${TipoProducto}   
+TipoDocumentoPorteDebeSer ${TipoDocumento} YEstarDeshabilitado
+    Element Should Contain  ${locDdlTipoDocumentoPorte}  ${TipoDocumento}
     Element Should Be Disabled  ${locDdlTipoDocumentoPorte}
-Nro documento porte debe tener el foco
+NroDocumentoPorteDebeTenerFoco
     Element Should Be Focused  ${locTxtNumeroDocumentoPorte}
-Nro cupo debe estar habilitado para el ingreso y datos documento inhabilitados
+NroCupoDebeEstarHabilitadoYDatosDocumentoInhabilitados
     Element Should Be Enabled  ${locTxtCodigoCupo}
     Element Should Be Disabled  ${locTxtProducto}
     Element Should Be Disabled  ${locBtnBuscarProducto}
@@ -30,7 +30,7 @@ Nro cupo debe estar habilitado para el ingreso y datos documento inhabilitados
     Element Should Be Disabled  ${locDdlMotivoCupo}
     Element Should Be Disabled  ${locTxtSedeOrigen}
     Element Should Be Focused  ${locTxtCodigoCupo}
-Datos documento deben estar habilitados para el ingreso y Nro cupo inhabilitado 
+DatosDocumentoDebenEstarHabilitadosYNroCupoInhabilitado 
     Element Should Be Disabled  ${locTxtCodigoCupo}
     Element Should Be Enabled  ${locTxtProducto}
     Element Should Be Enabled  ${locBtnBuscarProducto}
@@ -43,16 +43,16 @@ Datos documento deben estar habilitados para el ingreso y Nro cupo inhabilitado
     Element Should Be Enabled  ${locDdlFinalidad}
     Element Should Be Enabled  ${locDdlMotivoCupo}
     Element Should Be Enabled  ${locTxtSedeOrigen}
-Datos EPA deben estar habilitados para el ingreso
+DatosEPADebenEstarHabilitados
     Element Should Be Enabled  ${locTxtTitular}
     Element Should Be Enabled  ${locBtnBuscarTitular}
     Element Should Be Enabled  ${locDdlCampoEPA}
-Datos EPA deben estar deshabilitados para el ingreso
+DatosEPADebenEstarDeshabilitados
     Element Should Be Disabled  ${locTxtTitular}
     Element Should Be Disabled  ${locBtnBuscarTitular}
     Element Should Be Disabled  ${locDdlCampoEPA}
-Sistema debe recuperar datos del cupo ingresado
-    [Arguments]     ${aCupo}
+SistemaDebeRecuperarDatosCupoIngresado
+    [Arguments]     ${Cupo}
     ${Producto}=   Get Value  ${locTxtProducto}
     ${Vendedor}=    Get Value  ${locTxtVendedor}
     ${Corredor}=    Get Value  ${locTxtCorredor}
@@ -64,41 +64,41 @@ Sistema debe recuperar datos del cupo ingresado
         ...     INNER JOIN T_SOCIETY SS ON SS.ID_SOCIETY = QC.ID_SELLER
         ...     LEFT JOIN T_SOCIETY SB ON SB.ID_SOCIETY = QC.ID_BROKER 
         ...     INNER JOIN T_SOCIETY SC ON SC.ID_SOCIETY = QC.ID_CONSIGNEE 
-        ...     WHERE QUOTA_CODE = '${aCupo}'
+        ...     WHERE QUOTA_CODE = '${Cupo}'
     ${ResultadoQuery}   Query   ${Query}
     Should Be Equal As Integers  ${Producto}    ${ResultadoQuery[0][0]}
     Run Keyword If  ${ResultadoQuery[0][1]} is not None  Should Be Equal  ${Vendedor}    ${ResultadoQuery[0][1]}
     Run Keyword If  ${ResultadoQuery[0][2]} is not None  Should Be Equal  ${Corredor}    ${ResultadoQuery[0][2]}
-    Should Be Equal  ${Destinatario}    ${ResultadoQuery[0][3]}
-    Should Be Equal As Integers  ${Finalidad}   ${ResultadoQuery[0][4]}
-    Should Be Equal As Integers  ${MovitoCupo}      ${ResultadoQuery[0][5]}
-Sistema debe informar cupo anterior o posterior
-    Page Should Contain  ${MsjCupoAnteriorOPosterior} 
-Sistema debe marcar el ingreso sin cupo
+    Run Keyword If  ${ResultadoQuery[0][3]} is not None  Should Be Equal  ${Destinatario}    ${ResultadoQuery[0][3]}
+    Run Keyword If  ${ResultadoQuery[0][4]} is not None  Should Be Equal As Integers  ${Finalidad}   ${ResultadoQuery[0][4]}
+    Run Keyword If  ${ResultadoQuery[0][5]} is not None  Should Be Equal As Integers  ${MovitoCupo}      ${ResultadoQuery[0][5]}
+SistemaDebeInformarCupoAnteriorOPosterior
+    Page Should Contain  ${msjCupoAnteriorOPosterior} 
+SistemaDebeMarcarIngresoSinCupo
     Checkbox Should Be Selected  ${locChkSinCupo}
-Sistema debe informar que el cupo ya fue utilizado
-    Page Should Contain  ${MsjCupoUtilizado}
+SistemaDebeInformarCupoYaUtilizado
+    Page Should Contain  ${msjCupoUtilizado}
     Element Should Be Disabled  ${locBtnAceptar}
-Sistema debe visualizar descripcion del producto seleccionado
+SistemaDebeVisualizarDescripcionProductoSeleccionado
     [Arguments]     ${CodigoProducto}
     ${ResultadoQuery}=  Query  SELECT NAME_PRODUCT FROM T_PRODUCT WHERE ID_PRODUCT = ${CodigoProducto} 
     Element Text Should Be  ${loclblDescripcionProducto}  ${ResultadoQuery[0][0]}
-Sistema debe visualizar todas las finalidades activas
-    [Arguments]     ${aIdCircuito}
-    ${lista}     Get List Items  ${locDdlFinalidad}
+SistemaDebeVisualizarTodasFinalidadesActivas
+    [Arguments]     ${IdCircuito}
+    ${Lista}     Get List Items  ${locDdlFinalidad}
     ${Consulta}=    Catenate  SELECT NAME_PURPOSE FROM T_PURPOSE P
         ...     INNER JOIN T_CIRCUIT_PURPOSE CP ON P.ID_PURPOSE = CP.ID_PURPOSE
-        ...     WHERE P.ACTIVE = 1 AND CP.ID_CIRCUIT = ${aIdCircuito}
+        ...     WHERE P.ACTIVE = 1 AND CP.ID_CIRCUIT = ${IdCircuito}
     ${ResultadoConsulta}=   Query  ${Consulta}
-    ${cantFilas}=   Get Length  ${ResultadoConsulta}
-    FOR     ${i}    IN RANGE    1   ${cantFilas}
-        Should Be Equal  ${ResultadoConsulta[${i}-1][0]}  ${lista[${i}]}
+    ${CantFilas}=   Get Length  ${ResultadoConsulta}
+    FOR     ${i}    IN RANGE    1   ${CantFilas}
+        Should Be Equal  ${ResultadoConsulta[${i}-1][0]}  ${Lista[${i}]}
     END
-#Sistema debe informar el ingreso exitoso
+#SistemaDebeInformarIngresoExitoso
 #    Page Should Contain  Se aceptó el ingreso de la descarga
-#Sistema debe informar la accion dejar pendiente exitosa
+#SistemaDebeInformarAccionDejarPendienteExitosa
 #    Page Should Contain  La descarga quedó en estado Pendiente
-#Sistema debe informar campos obligatorios sin cupo y sin WS AFIP
+#SistemaDebeInformarCamposObligatoriosSinCupoYSinWsAfip
 #    ${Producto}=   Get Value  ${locTxtProducto}
 #    ${Vendedor}=    Get Value  ${locTxtVendedor}
 #    ${Corredor}=    Get Value  ${locTxtCorredor}
@@ -112,11 +112,11 @@ Sistema debe visualizar todas las finalidades activas
 #    Run Keyword If  '${Destinatario}' == '${EMPTY}'  Page Should Contain  El Campo Destinatario es requerido
 #    Run Keyword If  '${MovitoCupo}' == '${EMPTY}'  Page Should Contain  El Campo Motivo Cupo es requerido
 #    Sistema debe informar datos CTG obligatorios
-#Sistema debe informar campos obligatorios con cupo y sin WS AFIP
+#SistemaDebeInformarCamposObligatoriosConCupoYSinWsAfip
 #    Sistema debe informar datos CTG obligatorios
-#Sistema debe informar tarjeta en uso
+#SistemaDebeInformarTarjetaEnUso
 #    Page Should Contain  Tarjeta en uso
-#Sistema debe informar datos CTG obligatorios
+#SistemaDebeInformarDatosCTGObligatorios
 #    ${CTG}=  Get Value  ${locTxtCTG}
 #    ${Transportista}=  Get Value  ${locTxtTransportista}
 #    ${Chofer}=  Get Value  ${locTxtChofer}
@@ -130,20 +130,20 @@ Sistema debe visualizar todas las finalidades activas
 
 ##########################  TESTS FLUJOS ######################################
 
-Sistema debe volver al estado inicial de la pantalla
+SistemaDebeVolverAlEstadoInicialPantalla
     Element Text Should Be  ${locTxtNumeroDocumentoPorte}  ${EMPTY}
     Element Should Be Focused  ${locTxtNumeroDocumentoPorte}
-Sistema debe guardar el movimiento Pendiente Control
+SistemaDebeGuardarMovimientoPendienteControl
     [Arguments]     ${Tarjeta}
     ${Consulta}=    Catenate  SELECT M.* 
         ...     FROM T_MOVEMENT M
         ...     INNER JOIN T_CARD C ON M.ID_CARD = C.ID_CARD
         ...     WHERE M.ID_MOVEMENT_STATUS = ${gEstadoAptoControlEntrada} AND C.NUMBER = '${Tarjeta}'
     Check If Exists In Database    ${Consulta}
-Sistema debe marcar el cupo utilizado como Sin Cupo 
+SistemaDebeMarcarCupoUtilizadoComoSinCupo 
     [Arguments]     ${Cupo}
     Check If Exists In Database  SELECT * FROM T_QUOTA_DET_CODE WHERE QUOTA_CODE = '${Cupo}'
-Sistema debe guardar el movimiento Pendiente Cupo
+SistemaDebeGuardarMovimientoPendienteCupo
     [Arguments]     ${NroDocPorte}
     ${Consulta}=    Catenate  SELECT * 
         ...     FROM T_MOVEMENT 
