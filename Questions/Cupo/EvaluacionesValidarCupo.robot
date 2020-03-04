@@ -130,6 +130,24 @@ SistemaDebeVisualizarTodasFinalidadesActivas
 
 ##########################  TESTS FLUJOS ######################################
 
+VerificarMovimientoOK
+    [Arguments]     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}    
+    Page Should Contain     ${Msj}
+    SistemaDebeGuardarMovimientoPendienteControl  ${NroTarjeta}
+    Run Keyword If  ${ConCupo}==True  SistemaDebeMarcarCupoUtilizadoComoSinCupo   ${NroCupo}
+    SistemaDebeVolverAlEstadoInicialPantalla
+VerificarMovimientoConError
+    [Arguments]     ${Msj}
+    Page Should Contain     ${Msj}
+    #Run Keyword And Ignore Error  TareasAsignarTarjeta.CancelarAsignaciónTarjeta
+VerificarMovimientoPendienteConError
+    [Arguments]     ${Msj}
+    Page Should Contain     ${Msj}
+VerificarMovimientoPendienteOK
+    [Arguments]     ${Msj}  ${NroDocPorte}  
+    Page Should Contain     ${Msj}
+    SistemaDebeGuardarMovimientoPendienteCupo  ${NroDocPorte}
+    SistemaDebeVolverAlEstadoInicialPantalla
 SistemaDebeVolverAlEstadoInicialPantalla
     Element Text Should Be  ${locTxtNumeroDocumentoPorte}  ${EMPTY}
     Element Should Be Focused  ${locTxtNumeroDocumentoPorte}

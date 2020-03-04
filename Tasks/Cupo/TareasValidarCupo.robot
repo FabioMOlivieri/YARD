@@ -39,6 +39,13 @@ HabilitarAccionUsoTarjeta
 ########################################################
 
 ################# INGRESAR DATOS #######################
+IngresarDatos 
+    [Arguments]     ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+    IngresarCartaPorte  ${NroDocPorte}
+    Run Keyword If  ${ConCupo}==False  IngresarDatosMovimientoSinCupo     ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}   ${SedeOrigen} 
+    Run Keyword If  ${ConCupo}==True  IngresarDatosMovimientoConCupo     ${NroCupo}
+    IngresarDatosCTG  ${CTG}   ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+
 IngresarCartaPorte
     [Arguments]     ${NroDocPorte}
     Run Keyword If  '${NroDocPorte}' is not '${Empty}'  AccionesValidarCupo.IngresarNumeroDocumentoPorte  ${NroDocPorte}
@@ -64,16 +71,14 @@ IngresarDatosDocumento
     Run Keyword If  '${IdFinalidad}' is not '${Empty}'  AccionesValidarCupo.SeleccionarFinalidad   ${IdFinalidad}
     Run Keyword If  '${IdFinalidad}' is not '${Empty}' and '${IdMotivo}' is not '${Empty}'  AccionesValidarCupo.SeleccionarMotivoCupo     ${IdMotivo}
     Run Keyword If  '${CuilVendedor}' is not '${Empty}' and '${IdSede}' is not '${Empty}' and '${CuilVendedor}' == '${gCuilLDC}'  AccionesValidarCupo.IngresarSede  ${IdSede}
-#############################################################
 
-################# CUPO ######################################
 IngresarDatosMovimientoConCupo
     [Arguments]     ${NroCupo}
     SeleccionarIngresoConCupo
     IngresarCupo  ${NroCupo}
 
 SeleccionarIngresoConCupo
-    AccionesValidarCupo.Seleccionar Opcion Con Cupo
+    AccionesValidarCupo.SeleccionarOpcionConCupo
 
 IngresarCupo
     [Arguments]     ${NroCupo}
