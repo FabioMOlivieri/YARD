@@ -2,6 +2,10 @@
 Resource        ../Libraries Proxy/Selenium Proxy.robot
 Resource        ../Actions/AccionesLogin.robot
 Resource        ../Global Definitions/Variables.robot
+Library         RequestsLibrary
+Library         Collections
+Library         OperatingSystem
+Library         JSONLibrary
 
 *** Keywords ***
 IniciarAplicacion
@@ -10,7 +14,7 @@ IniciarAplicacion
     AbrirNavegador    ${Url}    ${Browser}
     IndicarUsuario  ${Usuario}    ${Contrasenia}
     IndicarTerminal  ${Terminal}
-    GuardarToken
+    #GuardarToken
 
 IndicarUsuario
     [Arguments]    ${Usuario}    ${Contrasenia}
@@ -24,7 +28,19 @@ IndicarTerminal
     AccionesLogin.PresionarIngresar
 
 GuardarToken
-    Sleep  5
-    ${LocalStorageToken}=    Devolver valor local storage   YardToken
-    ${BearerToken}  Catenate  Bearer  ${LocalStorageToken}
+    [Arguments]     ${Token}
+    #Sleep  5
+    #${LocalStorageToken}=    Devolver valor local storage   YardToken
+    ${BearerToken}  Catenate  Bearer  ${Token}
     Set Global Variable    ${gAutToken}    ${BearerToken}
+
+LoguearUsuarioSinIniciarAplicacion
+    [Arguments]     ${Usuario}    ${Contrasenia}    ${IdTerminal}
+    ${body}=    Create Dictionary    nombreUsuario=${Usuario}    contrasenia=${Contrasenia}     idTerminal=${IdTerminal}
+    ${Headers}=    Create Dictionary    Content-Type=application/json
+    Create Session    mySession    ${gAppUrlUat}
+    ${Response}=    Post Request    mySession    /login    data=${Body}    headers=${Headers}
+    ${bodyResponse}=    To Json    ${response.content}
+    ${Token}=    Get Value From Json    ${bodyResponse}    $.access_token
+    GuardarToken    ${Token[0]}
+    
