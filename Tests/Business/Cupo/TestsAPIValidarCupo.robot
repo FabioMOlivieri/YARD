@@ -2,6 +2,7 @@
 Test Template   Flujo
 Resource        ../../../Tasks/TareasLogin.robot
 Resource        ../../../Global Definitions/Variables.robot
+Resource        ../../../Global Definitions/Constantes.robot
 Resource        ../../../Questions/Cupo/EvaluacionesValidarCupo.robot
 Resource        ../../../Libraries Proxy/Selenium Proxy.robot
 Suite Setup     IniciarSuite
@@ -24,19 +25,10 @@ CasosPrueba   ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte} 
 **Keywords
 ######################### HACER REFACTOR PARA CONTEMPLAR TODOS LOS FLUJOS Y CASOS DE PRUEBAS ######################
 Flujo
-    [Arguments]     ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
-    ${Body}=   CargarJson   ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
-    Log To Console  ${Body}
-    ${Headers}=    Create Dictionary    Authorization=${gAutToken}    Content-Type=application/json
-    Create Session    mySession    ${gAppUrlUat}
-    ${Response}=    Post Request    mySession    /validar-precarga-cupo/Cereales    data=${Body}    headers=${Headers}
-    ${StatusCode}=    Convert To String    ${Response.status_code}
-    Should Be Equal    ${StatusCode}    422
-    ${bodyResponse}=    To Json    ${response.content}
-    ${Msj}=    Get Value From Json    ${bodyResponse}    $.message
-    Should Be Equal  ${Msj[0]}  Tarjeta en uso
-    #Should Be Equal  ${StatusCode}  201
-
+    [Arguments]     ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}   ${Msj}
+    Run Keyword If  '${Accion}'=='ACEPTA'   FlujoAceptar    ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}   ${Msj}    
+    Run Keyword If  '${Accion}'=='PENDIENTE'    FlujoPendiente  ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}   ${Msj}     
+    
 IniciarSuite
     TareasLogin.LoguearUsuarioSinIniciarAplicacion  ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}
     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
@@ -44,8 +36,28 @@ IniciarSuite
 CerrarSuite
     Disconnect From Database
 
+FlujoAceptar
+    [Arguments]     ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}   ${Msj}
+    ${Response}=    InvocarLogica   /validar-precarga-cupo/Cereales     ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
+    Run Keyword If  '${TipoFlujo}'=='ERROR'   EvaluarResultadoError   ${Response}     ${Msj}
+    Run Keyword If  '${TipoFlujo}'=='OK'    EvaluarResultadoAceptarOK  ${Response}     ${CodigoCupo}   ${NumeroTarjeta}
+
+FlujoPendiente
+    [Arguments]     ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}   ${Msj}
+    ${Response}=    InvocarLogica   /validar-precarga-cupo/dejar-pendiente-cereales     ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
+    Run Keyword If  '${TipoFlujo}'=='ERROR'   EvaluarResultadoError   ${Response}     ${Msj}
+    Run Keyword If  '${TipoFlujo}'=='OK'    EvaluarResultadoPendienteOK  ${Response}    ${NumeroDocumentoPorte}
+
+InvocarLogica
+    [Arguments]     ${Logica}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
+    ${Body}=   CargarJson   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
+    ${Headers}=    Create Dictionary    Authorization=${gAutToken}    Content-Type=application/json
+    Create Session    mySession    ${gAppUrlUat}
+    ${Response}=    Post Request    mySession    ${Logica}    data=${Body}    headers=${Headers}
+    [Return]    ${Response}
+
 CargarJson
-    [Arguments]     ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
+    [Arguments]     ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
     ############ Popular el json (NECESITO OTRO EXCEL CON LOS IDS y COMPLETAR EL RESTO DE LOS CAMPOS)
     ${Body}=   Load JSON From File    ${FilePathJsonPost}
     Run Keyword If  '${IdCircuito}' is not '${Empty}'   Update Value To Json  ${Body}  $.IdCircuito  ${IdCircuito}
@@ -75,3 +87,24 @@ CargarJson
     Run Keyword If  '${CodigoFiscalTransportista}' is not '${Empty}'   Update Value To Json  ${Body}  $.CodigoFiscalTransportista  ${CodigoFiscalTransportista}
     Run Keyword If  '${IdChofer}' is not '${Empty}'   Update Value To Json  ${Body}  $.IdChofer  ${IdChofer}
     [Return]    ${Body}
+
+EvaluarResultadoAceptarOK
+    [Arguments]     ${Response}     ${CodigoCupo}   ${NumeroTarjeta} 
+    ${StatusCode}=    Convert To String    ${Response.status_code}
+    Should Be Equal    ${StatusCode}    ${gServicioOK}
+    EvaluacionesValidarCupo.SistemaDebeGuardarMovimientoPendienteControl  ${NumeroTarjeta}
+    Run Keyword If  '${CodigoCupo}' is not '${Empty}'  EvaluacionesValidarCupo.SistemaDebeMarcarCupoUtilizadoComoSinCupo   ${CodigoCupo}
+
+EvaluarResultadoPendienteOK
+    [Arguments]     ${Response}     ${NroDocPorte}
+    ${StatusCode}=    Convert To String    ${Response.status_code}
+    Should Be Equal    ${StatusCode}    ${gServicioOK}
+    EvaluacionesValidarCupo.SistemaDebeGuardarMovimientoPendienteCupo  ${NroDocPorte}
+
+EvaluarResultadoError
+    [Arguments]     ${Response}     ${Msj}
+    ${StatusCode}=    Convert To String    ${Response.status_code}
+    Should Be Equal    ${StatusCode}    ${gServicioErrorLogica}
+    ${BodyResponse}=    To Json    ${Response.content}
+    ${Message}=    Get Value From Json    ${BodyResponse}    $.message
+    Should Contain  ${Message[0]}  ${Msj}

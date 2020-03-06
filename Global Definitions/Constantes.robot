@@ -21,3 +21,6 @@ ${gSedeBsAs}     1
 #Estados Movimiento
 ${gEstadoAptoControlEntrada}    10
 ${gEstadoPendienteCupo}     22
+#Estados Servicio
+${gServicioOK}  204
+${gServicioErrorLogica}   422
