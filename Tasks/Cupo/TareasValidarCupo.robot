@@ -1,12 +1,64 @@
 *** Settings ***
 Resource        ../../Actions/Cupo/AccionesValidarCupo.robot
 Resource        ../../Global Definitions/Constantes.robot
+Resource        ../../Global Definitions/Mensajes.robot
 Resource        ../../Libraries Proxy/Selenium Proxy.robot
 Resource        ../Popups generales/TareasAsignarTarjeta.robot 
 Resource        ../TareasMenu.robot
 Library         DatabaseLibrary
 
 *** Keywords ***
+############## FLUJOS #########################
+AceptarSinWsAfipMovimientoOK
+    [Arguments]     ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}
+    SetearCaracteristicas  ${ConWSAfip}    ${ConTarjeta}
+    IngresarDatos   ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+    TareasValidarCupo.IngresarCodigoCancelacionCTG  ${CodCancCTG}  
+    Scrollear Hasta Final Pagina
+    DecideAceptar
+    Run Keyword If  ${ConTarjeta}==True  TareasAsignarTarjeta.AsignarTarjeta  ${NroTarjeta}
+    
+AceptarConWsAfipMovimientoOK
+    [Arguments]     ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}
+    SetearCaracteristicas  ${ConWSAfip}    ${ConTarjeta}
+    IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+    Scrollear Hasta Final Pagina
+    DecideAceptar
+    Run Keyword If  ${ConTarjeta}==True     TareasAsignarTarjeta.AsignarTarjeta  ${NroTarjeta}
+    Sleep   2
+    ${ServicioAFIPOK}=  Run Keyword And Return Status  Page Should Contain  ${msjServicioAFIPNoDisponible}
+    Run Keyword If  ${ServicioAFIPOK}     TareasValidarCupo.IngresarCodigoCancelacionCTG  ${CodCancCTG}
+    Run Keyword If  ${ServicioAFIPOK}     DecidirAceptar
+    
+AceptarSinWsAfipMovimientoConError
+    [Arguments]     ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}
+    SetearCaracteristicas  ${ConWSAfip}    ${ConTarjeta}
+    IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+    TareasValidarCupo.IngresarCodigoCancelacionCTG  ${CodCancCTG}  
+    Scrollear Hasta Final Pagina
+    DecideAceptar
+    Run Keyword If  ${ConTarjeta}==True  TareasAsignarTarjeta.AsignarTarjeta  ${NroTarjeta}
+    
+AceptarConWsAfipMovimientoConError
+    [Arguments]     ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}
+    Setear Caracteristicas  ${ConWSAfip}    ${ConTarjeta}
+    IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+    Scrollear Hasta Final Pagina
+    DecideAceptar
+    Run Keyword If  ${ConTarjeta}==True     TareasAsignarTarjeta.AsignarTarjeta  ${NroTarjeta}
+        
+DejarPendienteMovimientoOK
+    [Arguments]     ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${MotivoPend}   ${ObsPend}
+    IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+    Scrollear Hasta Final Pagina
+    DecidirDejarPendienteCupo
+    AceptarDejarPendienteCupo  ${MotivoPend}   ${ObsPend}
+    
+DejarPendienteMovimientoConError
+    [Arguments]     ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+    IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
+    Scrollear Hasta Final Pagina
+    DecidirDejarPendienteCupo
 
 ############## CARACTERÍSTICAS #################
 SetearCaracteristicas
@@ -64,13 +116,13 @@ IngresarProducto
 
 IngresarDatosDocumento
     [Arguments]     ${CodProducto}    ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}   ${IdMotivo}   ${IdSede}
-    Run Keyword If  '${CodProducto}' is not '${Empty}'  AccionesValidarCupo.IngresarProducto   ${CodProducto}
-    Run Keyword If  '${CuilVendedor}' is not '${Empty}'  AccionesValidarCupo.IngresarVendedor   ${CuilVendedor}
-    Run Keyword If  '${CuilCorredor}' is not '${Empty}'  AccionesValidarCupo.IngresarCorredor   ${CuilCorredor}
-    Run Keyword If  '${CuilDestinatario}' is not '${Empty}'  AccionesValidarCupo.IngresarDestinatario   ${CuilDestinatario}
-    Run Keyword If  '${IdFinalidad}' is not '${Empty}'  AccionesValidarCupo.SeleccionarFinalidad   ${IdFinalidad}
-    Run Keyword If  '${IdFinalidad}' is not '${Empty}' and '${IdMotivo}' is not '${Empty}'  AccionesValidarCupo.SeleccionarMotivoCupo     ${IdMotivo}
-    Run Keyword If  '${CuilVendedor}' is not '${Empty}' and '${IdSede}' is not '${Empty}' and '${CuilVendedor}' == '${gCuilLDC}'  AccionesValidarCupo.IngresarSede  ${IdSede}
+    Run Keyword If  '${CodProducto}' is not '${Empty}' and '${CodProducto}' is not 'None'  AccionesValidarCupo.IngresarProducto   ${CodProducto}
+    Run Keyword If  '${CuilVendedor}' is not '${Empty}' and '${CuilVendedor}' is not 'None'  AccionesValidarCupo.IngresarVendedor   ${CuilVendedor}
+    Run Keyword If  '${CuilCorredor}' is not '${Empty}' and '${CuilCorredor}' is not 'None'  AccionesValidarCupo.IngresarCorredor   ${CuilCorredor}
+    Run Keyword If  '${CuilDestinatario}' is not '${Empty}' and '${CuilDestinatario}' is not 'None'  AccionesValidarCupo.IngresarDestinatario   ${CuilDestinatario}
+    Run Keyword If  '${IdFinalidad}' is not '${Empty}' and '${CuilDestinatario}' is not 'None'  AccionesValidarCupo.SeleccionarFinalidad   ${IdFinalidad}
+    Run Keyword If  '${IdFinalidad}' is not '${Empty}' and '${IdFinalidad}' is not 'None' and '${IdMotivo}' is not '${Empty}' and '${IdMotivo}' is not 'None'  AccionesValidarCupo.SeleccionarMotivoCupo     ${IdMotivo}
+    Run Keyword If  '${CuilVendedor}' is not '${Empty}' and '${CuilVendedor}' is not 'None' and '${IdSede}' is not '${Empty}' and '${IdSede}' is not 'None' and '${CuilVendedor}' == '${gCuilLDC}'  AccionesValidarCupo.IngresarSede  ${IdSede}
 
 IngresarDatosMovimientoConCupo
     [Arguments]     ${NroCupo}
@@ -88,10 +140,10 @@ IngresarCupo
 ################ DATOS CTG ##################################
 IngresarDatosCTG
     [Arguments]     ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNetos}
-    Run Keyword If  '${CTG}' is not '${Empty}'  AccionesValidarCupo.IngresarCTG  ${CTG}
-    Run Keyword If  '${CuilTransportista}' is not '${Empty}'  AccionesValidarCupo.IngresarTransportista  ${CuilTransportista}
-    Run Keyword If  '${CuilChofer}' is not '${Empty}'  AccionesValidarCupo.IngresarChofer  ${CuilChofer}
-    Run Keyword If  '${KgNetos}' is not '${Empty}'  AccionesValidarCupo.IngresarKGNetos  ${KgNetos}
+    Run Keyword If  '${CTG}' is not '${Empty}' and '${CTG}' is not 'None'  AccionesValidarCupo.IngresarCTG  ${CTG}
+    Run Keyword If  '${CuilTransportista}' is not '${Empty}' and '${CuilTransportista}' is not 'None'  AccionesValidarCupo.IngresarTransportista  ${CuilTransportista}
+    Run Keyword If  '${CuilChofer}' is not '${Empty}' and '${CuilChofer}' is not 'None'  AccionesValidarCupo.IngresarChofer  ${CuilChofer}
+    Run Keyword If  '${KgNetos}' is not '${Empty}' and '${KgNetos}' is not 'None'  AccionesValidarCupo.IngresarKGNetos  ${KgNetos}
 
 IngresarCodigoCancelacionCTG
     [Arguments]     ${CodCancCTG}

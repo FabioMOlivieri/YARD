@@ -43,60 +43,31 @@ CerrarSuite
 
 FlujoAceptarOKSinWsAfip
     [Arguments]     ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend}
-    TareasValidarCupo.SetearCaracteristicas  ${ConWSAfip}    ${ConTarjeta}
-    TareasValidarCupo.IngresarDatos   ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
-    TareasValidarCupo.IngresarCodigoCancelacionCTG  ${CodCancCTG}  
-    Scrollear Hasta Final Pagina
-    TareasValidarCupo.DecideAceptar
-    Run Keyword If  ${ConTarjeta}==True  TareasAsignarTarjeta.AsignarTarjeta  ${NroTarjeta}
-    EvaluacionesValidarCupo.VerificarMovimientoOK     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}
+    TareasValidarCupo.AceptarSinWsAfipMovimientoOK  ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}
+    EvaluacionesValidarCupo.VerificarMovimientoOK   ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}
 
 FlujoAceptarOKConWsAfip
     [Arguments]     ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend}
-    TareasValidarCupo.SetearCaracteristicas  ${ConWSAfip}    ${ConTarjeta}
-    TareasValidarCupo.IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
-    Scrollear Hasta Final Pagina
-    TareasValidarCupo.DecideAceptar
-    Run Keyword If  ${ConTarjeta}==True     TareasAsignarTarjeta.AsignarTarjeta  ${NroTarjeta}
-    Sleep   2
-    ${ServicioAFIPOK}=  Run Keyword And Return Status  Page Should Contain  ${msjServicioAFIPNoDisponible}
-    Run Keyword If  ${ServicioAFIPOK}     TareasValidarCupo.IngresarCodigoCancelacionCTG  ${CodCancCTG}
-    Run Keyword If  ${ServicioAFIPOK}     TareasValidarCupo.DecidirAceptar
-    EvaluacionesValidarCupo.VerificarMovimientoOK     ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}
+    TareasValidarCupo.AceptarConWsAfipMovimientoOK  ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}
+    EvaluacionesValidarCupo.VerificarMovimientoOK   ${Msj}  ${ConCupo}  ${NroCupo}  ${NroTarjeta}
     
 FlujoAceptarErrorSinWsAfip
     [Arguments]     ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend}
-    TareasValidarCupo.SetearCaracteristicas  ${ConWSAfip}    ${ConTarjeta}
-    TareasValidarCupo.IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
-    TareasValidarCupo.IngresarCodigoCancelacionCTG  ${CodCancCTG}  
-    Scrollear Hasta Final Pagina
-    TareasValidarCupo.DecideAceptar
-    Run Keyword If  ${ConTarjeta}==True  TareasAsignarTarjeta.AsignarTarjeta  ${NroTarjeta}
-    EvaluacionesValidarCupo.VerificarMovimientoConError    ${Msj}
-    Run Keyword And Ignore Error  TareasAsignarTarjeta.CancelarAsignaciónTarjeta
-
+    TareasValidarCupo.AceptarSinWsAfipMovimientoConError    ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}  
+    EvaluacionesValidarCupo.VerificarMovimientoConError     ${Msj}
+    
 FlujoAceptarErrorConWsAfip
     [Arguments]     ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend}
-    TareasValidarCupo.Setear Caracteristicas  ${ConWSAfip}    ${ConTarjeta}
-    TareasValidarCupo.IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
-    Scrollear Hasta Final Pagina
-    TareasValidarCupo.DecideAceptar
-    Run Keyword If  ${ConTarjeta}==True     TareasAsignarTarjeta.AsignarTarjeta  ${NroTarjeta}
+    TareasValidarCupo.AceptarConWsAfipMovimientoConError    ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}
     Sleep   2
-    EvaluacionesValidarCupo.VerificarMovimientoConError    ${Msj}
-    Run Keyword And Ignore Error  TareasAsignarTarjeta.CancelarAsignaciónTarjeta
-
+    EvaluacionesValidarCupo.VerificarMovimientoConError     ${Msj}
+    
 FlujoPendienteOK
     [Arguments]     ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend}
-    TareasValidarCupo.IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
-    Scrollear Hasta Final Pagina
-    TareasValidarCupo.DecidirDejarPendienteCupo
-    TareasDejarCupoPendiente.AceptarDejarPendienteCupo  ${MotivoPend}   ${ObsPend}
-    EvaluacionesValidarCupo.VerificarMovimientoPendienteOK     ${Msj}  ${NroDocPorte}
+    TareasValidarCupo.DejarPendienteMovimientoOK    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${MotivoPend}   ${ObsPend}
+    EvaluacionesValidarCupo.VerificarMovimientoPendienteOK  ${Msj}  ${NroDocPorte}
 
 FlujoPendienteError
     [Arguments]     ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend}
-    TareasValidarCupo.IngresarDatos  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
-    Scrollear Hasta Final Pagina
-    TareasValidarCupo.DecidirDejarPendienteCupo
+    TareasValidarCupo.DejarPendienteMovimientoConError  ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidad}     ${IdMotivo}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}
     EvaluacionesValidarCupo.VerificarMovimientoPendienteConError    ${Msj}

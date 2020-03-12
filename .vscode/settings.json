@@ -62,6 +62,20 @@
           { "name": "Convert JSON To String",  "args": ["json_object"],  "doc": "Convert JSON object to string" },
           { "name": "Convert String to JSON",  "args": ["json_string"],  "doc": "Convert String to JSON object" }
         ] 
+      },
+      {
+        "name": "OpenpyxlLib2",
+        "version": "0.1",
+        "keywords": [
+          { "name": "Open Excel",  "args": ["file"],  "doc": "Open excel file" },
+          { "name": "Get sheet names",  "args": ["file"],  "doc": "Return sheetnames of the workbook" },
+          { "name": "Get Column count",  "args": ["sheetname"],  "doc": "Return the column count of the given sheet" },
+          { "name": "Get Row count",  "args": ["sheetname"],  "doc": "Return the Row count of the given sheet" },
+          { "name": "Read Cell Data By Coordinates",  "args": ["sheetname","row_value","column_value"],  "doc": "Return the value of a cell by giving the sheetname, row value & column value" },
+          { "name": "Write Data By Coordinates",  "args": ["sheetname","row_value","column_value","data"],  "doc": "Write the value to a call using its co-ordinates" },
+          { "name": "Save Excelfile",  "args": ["file"],  "doc": "Save the excel file after writing the data" },
+          { "name": "Add new sheet",  "args": ["newsheetname"],  "doc": "Add new sheet" }
+        ] 
       }
       ]
 }

@@ -72,9 +72,9 @@ PresionarBusquedaAvanzadaDestinatario
     ${btnDestinatario}    Capturar Elemento    ${locBtnDestinatario}
     Presionar Boton    ${btnDestinatario}
 SeleccionarFinalidad
-    [Arguments]     ${IdFinalida}
+    [Arguments]     ${IdFinalidad}
     ${ddlFinalidad}  Capturar Elemento  ${locDdlFinalidad}
-    Elegir Opcion Lista Por Valor  ${ddlFinalidad}  ${IdFinalida} 
+    Elegir Opcion Lista Por Valor  ${ddlFinalidad}  ${IdFinalidad} 
 SeleccionarMotivoCupo
     [Arguments]     ${IdMotivoCupo}
     ${ddlMotivoCupo}  Capturar Elemento  ${locDdlMotivoCupo}
