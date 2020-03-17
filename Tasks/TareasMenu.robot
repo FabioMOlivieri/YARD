@@ -12,8 +12,7 @@ IrAValidarCupo
     #SeleccionarOpcionMenuSubMenu   ${locBtnValidarCupo}
 
 IrAGestionarCupo
-    IrASubMenuCupo
-    AccionesMenu.SeleccionarOpcionMenuSubMenu   ${locBtnGestionarCupo}
+    Ir A Otra Pagina  http://arrosvmapp313/ldc-yard/cupo/gestionar-cupos
 
 IrASubMenuControl
     AccionesMenu.SeleccionarOpcionMenuSubMenu   ${locBtnMenu}

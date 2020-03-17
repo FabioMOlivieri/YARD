@@ -1,4 +1,6 @@
 **Variables
+#Tipo Doc Porte
+${gIdTipoCartaPorte}    7
 #Producto
 ${gIdSoja}          23   
 ${gIdSojaEpa}       106
@@ -21,6 +23,11 @@ ${gSedeBsAs}     1
 #Estados Movimiento
 ${gEstadoAptoControlEntrada}    10
 ${gEstadoPendienteCupo}     22
+${gEstadoAnulado}   29
 #Estados Servicio
 ${gServicioOK}  204
 ${gServicioErrorLogica}   422
+#Motivo Estado Movimiento
+${gMotivoEstadoMovNinguno}  1
+#Filtro
+${gValorFiltroTodos}    -1

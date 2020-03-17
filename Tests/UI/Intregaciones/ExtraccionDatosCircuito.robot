@@ -30,7 +30,8 @@ ObtenerDatosCupo
     ${NroTarjeta}=  Read Cell Data By Coordinates   ${HojaExcelCupo}   ${CasoPruebaCupo}    19
     ${ValFront}=    Read Cell Data By Coordinates   ${HojaExcelCupo}   ${CasoPruebaCupo}    20
     ${MotivoPend}=  Read Cell Data By Coordinates   ${HojaExcelCupo}   ${CasoPruebaCupo}    21
+    ${MotivoPendStr}=   Convert To String  ${MotivoPend}
     ${ObsPend}=     Read Cell Data By Coordinates   ${HojaExcelCupo}   ${CasoPruebaCupo}    22
     ${Msj}=     Read Cell Data By Coordinates   ${HojaExcelCupo}   ${CasoPruebaCupo}    23
-    @{DatosCupo}=   Create List  ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidadStr}     ${IdMotivoStr}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPend}   ${ObsPend}
+    @{DatosCupo}=   Create List  ${ConWSAfip}    ${NroDocPorte}  ${ConCupo}  ${NroCupo}  ${CodProducto}     ${CuilVendedor}    ${CuilCorredor}    ${CuilDestinatario}    ${IdFinalidadStr}     ${IdMotivoStr}  ${SedeOrigen}   ${CTG}     ${CuilTransportista}   ${CuilChofer}  ${KgNeto}  ${CodCancCTG}   ${ConTarjeta}   ${NroTarjeta}   ${ValFront}   ${Msj}    ${MotivoPendStr}   ${ObsPend}
     [Return]    @{DatosCupo}

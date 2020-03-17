@@ -1,14 +1,14 @@
 *** Settings ***
-Resource        ../../../Tasks/Cupo/TareasValidarCupo.robot
-Resource        ../../../Tasks/Popups generales/TareasAsignarTarjeta.robot
-Resource        ../../../Tasks/Cupo/TareasBusquedaAvanzadaProducto.robot
-Resource        ../../../Tasks/Cupo/TareasDejarCupoPendiente.robot
-Resource        ../../../Tasks/TareasLogin.robot
-Resource        ../../../Tasks/TareasMenu.robot
-Resource        ../../../Global Definitions/Variables.robot
-Resource        ../../../Global Definitions/Constantes.robot
-Resource        ../../../Questions/Cupo/EvaluacionesValidarCupo.robot
-Resource        ../../../Libraries Proxy/Selenium Proxy.robot
+Resource        ../../../../Tasks/Cupo/TareasValidarCupo.robot
+Resource        ../../../../Tasks/Popups generales/TareasAsignarTarjeta.robot
+Resource        ../../../../Tasks/Cupo/TareasBusquedaAvanzadaProducto.robot
+Resource        ../../../../Tasks/Cupo/TareasDejarCupoPendiente.robot
+Resource        ../../../../Tasks/TareasLogin.robot
+Resource        ../../../../Tasks/TareasMenu.robot
+Resource        ../../../../Global Definitions/Variables.robot
+Resource        ../../../../Global Definitions/Constantes.robot
+Resource        ../../../../Questions/Cupo/EvaluacionesValidarCupo.robot
+Resource        ../../../../Libraries Proxy/Selenium Proxy.robot
 Suite Setup     Run Keywords  TareasLogin.IniciarAplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}     AND     TareasMenu.IrAValidarCupo
 Suite Teardown  Cerrar Pantalla
 Library         DatabaseLibrary

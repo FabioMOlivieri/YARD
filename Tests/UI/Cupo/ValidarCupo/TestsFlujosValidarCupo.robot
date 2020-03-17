@@ -1,15 +1,15 @@
 *** Settings ***
 Test Template   Flujo
-Resource        ../../../Tasks/Cupo/TareasValidarCupo.robot
-Resource        ../../../Tasks/Popups generales/TareasAsignarTarjeta.robot
-Resource        ../../../Tasks/Cupo/TareasDejarCupoPendiente.robot
-Resource        ../../../Tasks/TareasLogin.robot
-Resource        ../../../Tasks/TareasMenu.robot
-Resource        ../../../Global Definitions/Variables.robot
-Resource        ../../../Global Definitions/Constantes.robot
-Resource        ../../../Global Definitions/Mensajes.robot
-Resource        ../../../Questions/Cupo/EvaluacionesValidarCupo.robot
-Resource        ../../../Libraries Proxy/Selenium Proxy.robot
+Resource        ../../../../Tasks/Cupo/TareasValidarCupo.robot
+Resource        ../../../../Tasks/Popups generales/TareasAsignarTarjeta.robot
+Resource        ../../../../Tasks/Cupo/TareasDejarCupoPendiente.robot
+Resource        ../../../../Tasks/TareasLogin.robot
+Resource        ../../../../Tasks/TareasMenu.robot
+Resource        ../../../../Global Definitions/Variables.robot
+Resource        ../../../../Global Definitions/Constantes.robot
+Resource        ../../../../Global Definitions/Mensajes.robot
+Resource        ../../../../Questions/Cupo/EvaluacionesValidarCupo.robot
+Resource        ../../../../Libraries Proxy/Selenium Proxy.robot
 Suite Setup     IniciarSuite
 Suite Teardown  CerrarSuite
 Library         DataDriver    ${FilePathExcel}    sheet_name=${HojaExcel}
