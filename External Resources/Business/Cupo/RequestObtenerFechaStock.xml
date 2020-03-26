@@ -2,10 +2,10 @@
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 <soap:Body>
 <GetStockDateWithoutEquivalences xmlns="http://tempuri.org/">
-<societyID>1</societyID>
-<productID>23</productID>
-<terminalID>148</terminalID>
-<stockDate>20200326</stockDate>
+<societyID>IdSociedad</societyID>
+<productID>IdProducto</productID>
+<terminalID>IdTerminal</terminalID>
+<stockDate>Fecha</stockDate>
 </GetStockDateWithoutEquivalences>
 </soap:Body>
 </soap:Envelope>
