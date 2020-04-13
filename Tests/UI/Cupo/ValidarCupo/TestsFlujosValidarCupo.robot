@@ -14,9 +14,10 @@ Suite Setup     IniciarSuite
 Suite Teardown  CerrarSuite
 Library         DataDriver    ${FilePathExcel}    sheet_name=${HojaExcel}
 Library         DatabaseLibrary
+Force Tags      Flujos    AltaCriticidad
 
 **Variables
-${FilePathExcel}    ../../../External Resources/UI/Cupo/CasosPruebaValidarCupo.xlsx
+${FilePathExcel}    ../../../../External Resources/UI/Cupo/CasosPruebaValidarCupo.xlsx
 ${HojaExcel}      Datos
 
 ***Test Cases***     

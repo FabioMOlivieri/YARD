@@ -12,6 +12,7 @@ Resource        ../../../../Libraries Proxy/Selenium Proxy.robot
 Suite Setup     Run Keywords  TareasLogin.IniciarAplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}     AND     TareasMenu.IrAValidarCupo
 Suite Teardown  Cerrar Pantalla
 Library         DatabaseLibrary
+Force Tags      Usabilidad   BajaCriticidad
 
 **Test Cases
 #### USABILIDADES PARTICULARES####

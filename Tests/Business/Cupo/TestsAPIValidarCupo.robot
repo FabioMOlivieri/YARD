@@ -5,6 +5,7 @@ Resource        ../../../Global Definitions/Variables.robot
 Resource        ../../../Global Definitions/Constantes.robot
 Resource        ../../../Questions/Cupo/EvaluacionesValidarCupo.robot
 Resource        ../../../Libraries Proxy/Selenium Proxy.robot
+Resource        ../../../External Resources/RutaRecursos.robot
 Suite Setup     IniciarSuite
 Suite Teardown  CerrarSuite
 Library         DataDriver    ${FilePathExcel}    sheet_name=${HojaExcel}
@@ -17,7 +18,7 @@ Library         JSONLibrary
 **Variables
 ${FilePathExcel}    ../../../External Resources/Business/Cupo/CasosPruebaValidarCupo.xlsx
 ${HojaExcel}      Datos
-${FilePathJsonPost}     ../../../External Resources/Business/Cupo/ValidarCupoPost.json
+${FilePathJsonPost}     Business/Cupo/ValidarCupoPost.json
 
 ***Test Cases***     
 CasosPrueba   ${TipoFlujo}  ${Accion}   ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
@@ -32,7 +33,9 @@ Flujo
 IniciarSuite
     TareasLogin.LoguearUsuarioSinIniciarAplicacion  ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}
     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
-    
+    ${Ruta}=    ObtenerRutaRecursos
+    Set Suite Variable  ${RutaRecurso}  ${Ruta}
+
 CerrarSuite
     Disconnect From Database
 
@@ -59,7 +62,7 @@ InvocarLogica
 CargarJson
     [Arguments]     ${IdCircuito}   ${IdTipoDocumentoPorte}     ${NumeroDocumentoPorte}     ${IdTipoProducto}   ${CodigoCupo}   ${IdProducto}   ${IdVendedor}   ${IdCorredorComprador}  ${IdDestinatario}   ${IdSedeOrigen}     ${IdFinalidad}  ${IdMotivoCupo}     ${IdActividad}  ${ObservacionDelMotivo}     ${IdMotivoEstadoMovimiento}     ${EsModificacion}   ${EsDejarPendiente}     ${IdEstadoInicialCupo}  ${NumeroTarjeta}    ${KilosNeto}    ${AceptarSinConfirmarCtg}   ${CodigoCancelacionCtg}     ${CodigoTrazabilidadGrano}  ${IdTransportista}  ${CodigoFiscalTransportista}    ${IdChofer}
     ############ Popular el json (NECESITO OTRO EXCEL CON LOS IDS y COMPLETAR EL RESTO DE LOS CAMPOS)
-    ${Body}=   Load JSON From File    ${FilePathJsonPost}
+    ${Body}=   Load JSON From File    ${RutaRecurso}/${FilePathJsonPost}
     Run Keyword If  '${IdCircuito}' is not '${Empty}'   Update Value To Json  ${Body}  $.IdCircuito  ${IdCircuito}
     Run Keyword If  '${IdTipoDocumentoPorte}' is not '${Empty}'   Update Value To Json  ${Body}  $.IdTipoDocumentoPorte  ${IdTipoDocumentoPorte}
     Run Keyword If  '${NumeroDocumentoPorte}' is not '${Empty}'   Update Value To Json  ${Body}  $.NumeroDocumentoPorte  ${NumeroDocumentoPorte}

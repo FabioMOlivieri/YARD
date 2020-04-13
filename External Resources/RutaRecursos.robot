@@ -1,0 +1,3 @@
+**Keywords
+ObtenerRutaRecursos
+    [Return]    ${CURDIR}

@@ -9,6 +9,7 @@ Resource        ../../../../Libraries Proxy/Selenium Proxy.robot
 Suite Setup     IniciarSuite
 Suite Teardown  CerrarSuite
 Library         DatabaseLibrary
+Force Tags      Navegabilidad   AltaCriticidad    
 
 **Variables
 ${NroDocPorteParaConsultar}  888811111151

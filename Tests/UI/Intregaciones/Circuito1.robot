@@ -14,12 +14,14 @@ Resource        ../../../Global Definitions/Variables.robot
 Resource        ../../../Global Definitions/Constantes.robot
 Resource        ../../../Libraries Proxy/Selenium Proxy.robot
 Resource        ../../../Questions/Cupo/EvaluacionesValidarCupo.robot
+Resource        ../../../External Resources/RutaRecursos.robot
 Resource        ExtraccionDatosCircuito.robot
 Suite Setup     IniciarSuite
 Suite Teardown  CerrarSuite
+Force Tags      Circuitos   AltaCriticidad
 
 **Variables
-${FilePathExcelCircuitos}    ../../../External Resources/UI/Integracion/CasosPruebaCircuitos.xlsx
+${FilePathExcelCircuitos}    UI/Integracion/CasosPruebaCircuitos.xlsx
 
 **Test Cases
 Circuito
@@ -30,7 +32,8 @@ Circuito
 IniciarSuite
     IniciarAplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}
     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
-    Open Excel  ${FilePathExcelCircuitos}
+    ${RutaRecurso}=     ObtenerRutaRecursos
+    Open Excel  ${RutaRecurso}/${FilePathExcelCircuitos}
 
 CerrarSuite
     Cerrar Pantalla
