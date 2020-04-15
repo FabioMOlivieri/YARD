@@ -56,8 +56,8 @@ Cerrar Pantalla
     Close Browser
 
 Imprimir pantalla
-    [Arguments]    ${aLocalDir}
-    Capture Page Screenshot    ${aLocalDir}
+    [Arguments]    ${aNameFile}
+    Capture Page Screenshot    ${aNameFile}
 
 Imprimir Elemento
     [Arguments]    ${aElement}    ${aLocalDir}

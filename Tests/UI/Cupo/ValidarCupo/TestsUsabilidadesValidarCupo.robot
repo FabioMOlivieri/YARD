@@ -9,8 +9,8 @@ Resource        ../../../../Global Definitions/Variables.robot
 Resource        ../../../../Global Definitions/Constantes.robot
 Resource        ../../../../Questions/Cupo/EvaluacionesValidarCupo.robot
 Resource        ../../../../Libraries Proxy/Selenium Proxy.robot
-Suite Setup     Run Keywords  TareasLogin.IniciarAplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}     AND     TareasMenu.IrAValidarCupo
-Suite Teardown  Cerrar Pantalla
+Suite Setup     InicarSuite
+Suite Teardown  CerrarSuite
 Library         DatabaseLibrary
 Force Tags      Usabilidad   BajaCriticidad
 
@@ -18,36 +18,41 @@ Force Tags      Usabilidad   BajaCriticidad
 #### USABILIDADES PARTICULARES####
 
 UsabilidadEstadoInicial
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidadEstadoInicial.png
     #GIVEN estado inicial de la pantalla
     THEN EvaluacionesValidarCupo.TipoProductoDebeSer Cereal
         AND EvaluacionesValidarCupo.TipoDocumentoPorteDebeSer Carta de Porte YEstarDeshabilitado
         AND EvaluacionesValidarCupo.NroDocumentoPorteDebeTenerFoco
+        AND EvaluacionesValidarCupo.NroCupoDebeEstarHabilitadoYDatosDocumentoInhabilitados
 
 UsabilidadSeleccionOpcionConCupo
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidadSeleccionOpcionConCupo.png
     GIVEN TareasValidarCupo.IngresarCartaPorte  123412345678
     WHEN TareasValidarCupo.SeleccionarIngresoConCupo
     THEN EvaluacionesValidarCupo.NroCupoDebeEstarHabilitadoYDatosDocumentoInhabilitados
 
 UsabilidadSeleccionOpcionSinCupo
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidadSeleccionOpcionSinCupo.png
     GIVEN TareasValidarCupo.IngresarCartaPorte  123412345678
     WHEN TareasValidarCupo.SeleccionaIngresoSinCupo
     THEN EvaluacionesValidarCupo.DatosDocumentoDebenEstarHabilitadosYNroCupoInhabilitado 
 
 UsabilidaSeleccionProductoEPA
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidaSeleccionProductoEPA.png
     GIVEN TareasValidarCupo.IngresarCartaPorte  123412345678
         AND TareasValidarCupo.SeleccionaIngresoSinCupo
     WHEN TareasValidarCupo.IngresarProducto  ${gIdSojaEpa}
     THEN EvaluacionesValidarCupo.DatosEPADebenEstarHabilitados
 
 UsabilidadSeleccionProductoNoEPA  
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidadSeleccionProductoNoEPA.png
     GIVEN TareasValidarCupo.IngresarCartaPorte     123412345678
         AND TareasValidarCupo.SeleccionaIngresoSinCupo
     WHEN TareasValidarCupo.IngresarProducto    ${gIdSoja}
     THEN EvaluacionesValidarCupo.DatosEPADebenEstarDeshabilitados
 
 UsabilidadRecuperarDatoCupoAnterior
-    [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
-    [Teardown]  Disconnect From Database
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidadRecuperarDatoCupoAnterior.png 
     GIVEN TareasValidarCupo.IngresarCartaPorte     123412345678
         AND TareasValidarCupo.SeleccionarIngresoConCupo
     WHEN TareasValidarCupo.IngresarCupo  TMB-SOJ-20191123-8417
@@ -56,8 +61,7 @@ UsabilidadRecuperarDatoCupoAnterior
         AND EvaluacionesValidarCupo.SistemaDebeMarcarIngresoSinCupo
 
 UsabilidadBusquedaAvanzadaProducto
-    [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
-    [Teardown]  Disconnect From Database
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidadBusquedaAvanzadaProducto.png 
     GIVEN TareasValidarCupo.IngresarCartaPorte  123412345678
         AND TareasValidarCupo.SeleccionaIngresoSinCupo
     WHEN TareasValidarCupo.IrBusquedaAvanzadaProducto
@@ -65,17 +69,27 @@ UsabilidadBusquedaAvanzadaProducto
     THEN EvaluacionesValidarCupo.SistemaDebeVisualizarDescripcionProductoSeleccionado  ${gIdSoja}
 
 UsabilidadFinalidadesActivas
-    [Setup]     Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
-    [Teardown]  Disconnect From Database
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidadFinalidadesActivas.png 
     GIVEN TareasValidarCupo.IngresarCartaPorte  123412345678
         AND TareasValidarCupo.SeleccionaIngresoSinCupo
         AND TareasValidarCupo.IngresarDatosDocumento  ${gIdSoja}  ${gCuilLDC}    ${gCuilLDC}   ${gCuilZeni}    ${gIdFinalidadCV}   ${gIdMotivoCV}    ${gSedeCharata}
     THEN EvaluacionesValidarCupo.SistemaDebeVisualizarTodasFinalidadesActivas  ${gIdCircuitoDescargaCamionCerealTimbues}
 
 UsabilidadYValidacionCupoUtilizado
+    #[Teardown]  Run Keyword If Test Failed  Imprimir pantalla  UsabilidadYValidacionCupoUtilizado.png
     GIVEN Refrescar pagina
         AND TareasValidarCupo.IngresarCartaPorte     123412345678
         AND TareasValidarCupo.SeleccionarIngresoConCupo
     WHEN TareasValidarCupo.IngresarCupo  TMB-SOJ-20191022-2985
     THEN EvaluacionesValidarCupo.SistemaDebeInformarCupoYaUtilizado
 
+**Keywords
+InicarSuite
+    TareasLogin.IniciarAplicacion  ${gWebUrlUat}   ${gBrowserChrome}   ${gUser}    ${gContrasenia}     ${gIDTerminalTimbues}
+    Connect To Database    pymssql    ${gDBNameUat}    ${gDBUserUat}    ${gDBPassUat}    ${gDBHostUat}    ${gDBPortUat}
+    TareasMenu.IrAValidarCupo
+
+CerrarSuite
+    Disconnect From Database
+    Cerrar Pantalla
+    
